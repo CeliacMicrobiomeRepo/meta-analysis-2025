@@ -1,0 +1,58 @@
+Dataset Construction Summary
+Input Files:
+  - Sample Data: ./input_data/stool_v4/unfiltered_sample_data.tsv
+  - ASV Table: ./input_data/stool_v4/unfiltered_asv_table.tsv
+
+Output Files:
+  - Filtered Samples Metadata: ./datasets/stool_wGFD_ASV_after_tss/sample_labels.tsv
+  - ASV Abundance Matrix: ./datasets/stool_wGFD_ASV_after_tss/sample_asv_abundances.tsv
+
+Filters Applied:
+  - Exclude rows if:
+    - Sample_ID: ['-', '', 'NA']
+    - Dataset_ID: ['-', '', 'NA']
+    - Gluten_Free_Diet: []
+  - Only include rows if:
+    - Diagnosed_Celiac: [True, False]
+    - Any_Significant_Factor: [False]
+  - Exclude datasets: []
+  - Exclude samples: ['SRR1107516', 'ERR1551255', 'ERR1551306', 'SRR18231165', 'SRR6885558']
+
+Transformation Options:
+  - Pseudo count: 1e-06
+  - Transformation: tss
+
+Additional Options:
+  - Additional Features: []
+
+Summary:
+  - Initial number of samples: 376
+  - Final number of samples: 371
+  - Samples removed: 5
+Sample Label Details:
+Overall label distribution:
+  - True: 198
+  - False: 173
+
+Label distribution by dataset:
+  Dataset 16S_102_Bodkhe:
+    - False: 37
+    - True: 18
+  Dataset 16S_136_Nobel:
+    - False: 40
+    - True: 26
+  Dataset 16S_20_Rawson:
+    - False: 13
+    - True: 7
+  Dataset 16S_27_Fornasaro:
+    - True: 19
+    - False: 8
+  Dataset 16S_49_Turjeman:
+    - False: 30
+    - True: 19
+  Dataset 16S_60_Shi:
+    - True: 30
+    - False: 30
+  Dataset 16S_96_Quagliariello:
+    - True: 79
+    - False: 15
