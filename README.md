@@ -1,10 +1,10 @@
-# CeliacMicrobiomeRepo/meta-analysis-2025
+# Celiac Gut Microbiome Sequencing Meta-Analysis
 Scripts supporting the 2025 [meta-analysis](https://paper.link) of celiac gut microbiome sequencing data
 
 ## About
 
 ### Publication
-In this work we investigated the stool and duodenal microbiomes of individuals with celiac disease across 14 countries. Analysis involved XYZ. The publication can be accessed [here](https://paper.link).
+In this work we investigated the stool and duodenal microbiomes of individuals with celiac disease using multiple 16S rRNA sequencing datasets from across the globe. Analysis involved differential abundance analysis, comparison of diversity metrics, co-occurrence network analysis, and machine learning prediction of celiac disease. The publication can be accessed [here](https://paper.link).
 
 ### The Celiac Microbiome Repository
 The Celiac Microbiome Repository (CMR) is the best effort to comprehensively combine all high throughput sequencing datasets of the gut microbiome related to celiac disease. This [publication](https://paper.link) used data from version 1.0 of The Celiac Microbiome Repository (CMR), which was up to date as of **10th September 2024**. CMR is being extended beyond this date and is accessible on the [CMR GitHub Repo](https://github.com/CeliacMicrobiomeRepo/celiac-repository/tree/main/)
@@ -80,9 +80,7 @@ The scripts rely on several external tools and libraries, each with its own lice
 ### Mothur
 [Mothur](https://github.com/mothur/mothur/releases/tag/v1.48.2) was used for aligning ASVs to a full length 16S gene reference alignment. (License: [GPL v3.0](https://github.com/mothur/mothur/blob/main/LICENSE.md))
 
-### PICRUSt
-[PICRUSt2](https://github.com/picrust/picrust2/wiki/PICRUSt2-Tutorial-(v2.5.2)) was used for predicting functional abundances from ASVs. (License: [GPL v3.0](https://github.com/picrust/picrust2/blob/master/LICENSE))
 
 ## Authors
 - **Haig Bishop**:   haig.bishop@pg.canterbury.ac.nz
-- Peter Prendergast
+- **Peter Prendergast**
