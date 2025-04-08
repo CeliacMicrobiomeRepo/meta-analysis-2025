@@ -82,5 +82,6 @@ The scripts rely on several external tools and libraries, each with its own lice
 
 
 ## Authors
-- **Haig Bishop**:   haig.bishop@pg.canterbury.ac.nz
-- **Peter Prendergast**
+- **Haig Bishop**:    haig.bishop@pg.canterbury.ac.nz
+- **Peter Prendergast**:    peter.prendergast@pg.canterbury.ac.nz
+
