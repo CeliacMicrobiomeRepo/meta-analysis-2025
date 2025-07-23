@@ -1,0 +1,102 @@
+
+--- Checking Input Files ---
+Checking for seqs.fna files:
+                                                                                                path exists
+1       ~/Repos/celiac-repository/16S_datasets/16S_49_Turjeman//v4_truncation_stool_treated/seqs.fna   TRUE
+2        ~/Repos/celiac-repository/16S_datasets/16S_102_Bodkhe//v4_truncation_stool_treated/seqs.fna  FALSE
+3         ~/Repos/celiac-repository/16S_datasets/16S_80_Garcia//v4_truncation_stool_treated/seqs.fna  FALSE
+4        ~/Repos/celiac-repository/16S_datasets/16S_68_Girdhar//v4_truncation_stool_treated/seqs.fna  FALSE
+5         ~/Repos/celiac-repository/16S_datasets/16S_136_Nobel//v4_truncation_stool_treated/seqs.fna   TRUE
+6            ~/Repos/celiac-repository/16S_datasets/16S_60_Shi//v4_truncation_stool_treated/seqs.fna  FALSE
+7  ~/Repos/celiac-repository/16S_datasets/16S_96_Quagliariello//v4_truncation_stool_treated/seqs.fna   TRUE
+8         ~/Repos/celiac-repository/16S_datasets/16S_20_Rawson//v4_truncation_stool_treated/seqs.fna   TRUE
+9    ~/Repos/celiac-repository/16S_datasets/16S_1211_Milletich//v4_truncation_stool_treated/seqs.fna  FALSE
+10      ~/Repos/celiac-repository/16S_datasets/16S_119_Salamon//v4_truncation_stool_treated/seqs.fna  FALSE
+
+Checking for asv_abundances_transposed.tsv files:
+                                                                                                                     path exists
+1       ~/Repos/celiac-repository/16S_datasets/16S_49_Turjeman//v4_truncation_stool_treated/asv_abundances_transposed.tsv   TRUE
+2        ~/Repos/celiac-repository/16S_datasets/16S_102_Bodkhe//v4_truncation_stool_treated/asv_abundances_transposed.tsv  FALSE
+3         ~/Repos/celiac-repository/16S_datasets/16S_80_Garcia//v4_truncation_stool_treated/asv_abundances_transposed.tsv  FALSE
+4        ~/Repos/celiac-repository/16S_datasets/16S_68_Girdhar//v4_truncation_stool_treated/asv_abundances_transposed.tsv  FALSE
+5         ~/Repos/celiac-repository/16S_datasets/16S_136_Nobel//v4_truncation_stool_treated/asv_abundances_transposed.tsv   TRUE
+6            ~/Repos/celiac-repository/16S_datasets/16S_60_Shi//v4_truncation_stool_treated/asv_abundances_transposed.tsv  FALSE
+7  ~/Repos/celiac-repository/16S_datasets/16S_96_Quagliariello//v4_truncation_stool_treated/asv_abundances_transposed.tsv   TRUE
+8         ~/Repos/celiac-repository/16S_datasets/16S_20_Rawson//v4_truncation_stool_treated/asv_abundances_transposed.tsv   TRUE
+9    ~/Repos/celiac-repository/16S_datasets/16S_1211_Milletich//v4_truncation_stool_treated/asv_abundances_transposed.tsv  FALSE
+10      ~/Repos/celiac-repository/16S_datasets/16S_119_Salamon//v4_truncation_stool_treated/asv_abundances_transposed.tsv  FALSE
+
+
+--- Sample Filtering ---
+Initial number of samples: 4270 
+Samples after excluding rows where 'Dataset_ID' is one of [-, , NA]: 4270 (removed 0)
+Samples after excluding rows where 'Sequencing_Type' is one of [shotgun, , NA]: 3116 (removed 1154)
+Samples after excluding rows where 'Any_Significant_Factor' is one of [-, , NA, TRUE]: 2959 (removed 157)
+
+Samples after applying filter rule '(Diagnosed_Celiac == TRUE & Gluten_Free_Diet == TRUE) | (Diagnosed_Celiac == FALSE & Gluten_Free_Diet == FALSE)': 876 (removed 2083)
+Samples after applying filter rule 'Sample_Site == 'stool'': 574 (removed 302)
+
+Samples after excluding specific samples listed in LOW_READ_SAMPLES_TSV: 572  (removed  2 )
+
+Applied column filter to keep only: Dataset_ID, Diagnosed_Celiac, Sample_Site, Any_Significant_Factor, Gluten_Free_Diet, Seq_Tech, Will_Develop_Celiac, Sex 
+Number of samples remains: 572 
+
+Samples after keeping only those present in the sequence tables: 215  (removed  357 )
+
+After removing non-Illumina datasets:215 (removed 0)
+
+After removing datasets with imbalanced celiac vs healthy controls:215 (removed 0 samples from 0 datasets)
+
+--- Final Sample Table --- 
+Total samples remaining after all filtering: 215 
+
+Sample counts per dataset and label:
+                      
+                       FALSE TRUE
+  16S_136_Nobel           40   26
+  16S_20_Rawson            8    7
+  16S_49_Turjeman         30   10
+  16S_96_Quagliariello    15   79
+
+Overall label counts:
+
+FALSE  TRUE 
+   93   122 
+
+328 out of 4428 were assigned to the species level.
+Of which 299 had genera consistent with the input table.phyloseq-class experiment-level object
+otu_table()   OTU Table:         [ 4428 taxa and 215 samples ]
+sample_data() Sample Data:       [ 215 samples by 8 sample variables ]
+tax_table()   Taxonomy Table:    [ 4428 taxa by 7 taxonomic ranks ]
+phyloseq-class experiment-level object
+otu_table()   OTU Table:         [ 4350 taxa and 215 samples ]
+sample_data() Sample Data:       [ 215 samples by 8 sample variables ]
+tax_table()   Taxonomy Table:    [ 4350 taxa by 7 taxonomic ranks ]
+ASVs failing abundance filter: 4068 
+ASVs failing prevalence filter: 3912 
+ASVs removed total (unique): 4126 
+ASVs after both filters: 224 
+                     Total.Percentage.Abundance.of.Core.ASVs
+16S_49_Turjeman                                     88.70523
+16S_136_Nobel                                       88.67840
+16S_96_Quagliariello                                91.27520
+16S_20_Rawson                                       88.05932
+phyloseq-class experiment-level object
+otu_table()   OTU Table:         [ 224 taxa and 215 samples ]
+sample_data() Sample Data:       [ 215 samples by 8 sample variables ]
+tax_table()   Taxonomy Table:    [ 224 taxa by 7 taxonomic ranks ]
+phyloseq-class experiment-level object
+otu_table()   OTU Table:         [ 224 taxa and 215 samples ]
+sample_data() Sample Data:       [ 215 samples by 8 sample variables ]
+tax_table()   Taxonomy Table:    [ 224 taxa by 7 taxonomic ranks ]
+Samples per label per dataset:
+                      
+                       FALSE TRUE
+  16S_136_Nobel           40   26
+  16S_20_Rawson            8    7
+  16S_49_Turjeman         30   10
+  16S_96_Quagliariello    15   79
+Overall label counts:
+
+FALSE  TRUE 
+   93   122 

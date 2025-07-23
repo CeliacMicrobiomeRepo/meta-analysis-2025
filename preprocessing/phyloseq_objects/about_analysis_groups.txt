@@ -1,0 +1,53 @@
+
+
+These phyloseq objects were made from seperate truncations for each analysis...
+
+STOOL PROSPECTIVE:
+Min length: 93
+Median length: 95 
+Max length: 97
+Std length: 0.3953322
+
+STOOL ACTIVE:
+Min length: 198 
+Median length: 231 
+Max length: 270 
+Std length: 0.7027074 
+
+STOOL TREATED:
+Min length: 245 
+Median length: 247 
+Max length: 251 
+Std length: 0.3895775 
+
+DUODENUM ACTIVE:
+Min length: 187 
+Median length: 213 
+Max length: 251 
+Std length: 0.7256583 
+
+
+
+
+
+Groups for Analysis:
+   Stool Prospective CeD   (N=120, HC=60, CeD=60)   [Across 2 Datasets]
+     - 16S_1211_Milletich:             52 samples [HC=26, CeD=26]
+     - 16S_68_Girdhar:                 68 samples [HC=34, CeD=34]
+
+   Stool Active CeD        (N=158, HC=98, CeD=60)   [Across 3 Datasets]
+     - 16S_102_Bodkhe:                 59 samples [HC=38, CeD=21]
+     - 16S_49_Turjeman:                39 samples [HC=30, CeD=9]
+     - 16S_60_Shi:                     60 samples [HC=30, CeD=30]
+
+   Stool Treated CeD       (N=215, HC=93, CeD=122)   [Across 4 Datasets]
+     - 16S_136_Nobel:                  66 samples [HC=40, CeD=26]
+     - 16S_20_Rawson:                  15 samples [HC=8, CeD=7]
+     - 16S_49_Turjeman:                40 samples [HC=30, CeD=10]
+     - 16S_96_Quagliariello:           94 samples [HC=15, CeD=79]
+     
+   Duodenal Active CeD     (N=118, HC=54, CeD=64)   [Across 3 Datasets]
+     - 16S_102_Bodkhe:                 43 samples [HC=27, CeD=16]
+     - 16S_119_Salamon:                59 samples [HC=19, CeD=40]
+     - 16S_80_Garcia:                  16 samples [HC=8, CeD=8]
+     

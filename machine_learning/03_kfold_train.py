@@ -22,6 +22,16 @@ Parts:
 For input, this script takes the output of either:
     - construct_dataset_ASV.py 
     - construct_dataset_taxa.py
+
+This script is designed to be run from the command line inside the dataset directory.
+
+Example:
+```
+conda activate all_env
+cd ~/Repos/meta-analysis/machine_learning/datasets/duodenum_active_log10_after/
+python ../../03_kfold_train.py
+```
+
 """
 
 
@@ -49,17 +59,15 @@ start_time = time.time()
 
 
 # Options ------------------------------------------
-# Body site (duodenal or stool)
-BODY_SITE = "stool" ###
-# TSV file containing metadata for each sample
-TAXONOMIES_TSV_PATH = "../../input_data/" + BODY_SITE + "_v4/unfiltered_taxonomies.tsv"     # "../../input_data/"
 # Path to the dataset directory (also output directory)
-DATASET_DIR_PATH = os.getcwd()    # "./datasets/stool_wGFD_ASVsV4/"
+DATASET_DIR_PATH = os.getcwd()   # e.g. "./machine_learning/datasets/duodenum_active_log10_after/"
+# Extract the analysis group from the dataset directory
+# e.g.   'duodenum_active'   'stool_prospective'   'stool_active'   'stool_treated'
+GROUP_NAME = "_".join(DATASET_DIR_PATH.split("/")[-2].split("_")[0:2])
+# TSV file containing metadata for each sample
+TAXONOMIES_TSV_PATH = "../../all_data/" + GROUP_NAME + "/unfiltered_taxonomies.tsv"
 # Path to the feature matrix TSV file (input)
-# Try ASV file first, if not found use taxon file
-asv_path = os.path.join(DATASET_DIR_PATH, "sample_asv_abundances.tsv")
-taxon_path = os.path.join(DATASET_DIR_PATH, "sample_taxa_abundances.tsv")
-FEATURES_TSV_PATH = asv_path if os.path.exists(asv_path) else taxon_path
+FEATURES_TSV_PATH = os.path.join(DATASET_DIR_PATH, "sample_asv_abundances.tsv")
 # Path to the labels TSV file (input)
 LABELS_TSV_PATH = os.path.join(DATASET_DIR_PATH, "sample_labels.tsv")
 # Output subdirectory
@@ -140,7 +148,7 @@ y = y.set_index('Sample_ID')
 y = y.loc[X.index]
 
 # Extract labels for cross-validation
-labels = y['Diagnosed_Celiac'].astype(str).values  # Convert booleans to strings
+labels = y['Disease_Status'].astype(str).values  # Convert booleans to strings
 
 # Encode labels as integers
 le = LabelEncoder()

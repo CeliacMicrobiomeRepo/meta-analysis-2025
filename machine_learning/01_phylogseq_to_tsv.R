@@ -1,24 +1,34 @@
 
-# This script processes a phyloseq object from an RDS file (originating from the combine_trunc_asvs_phyloseq.R script)
-# It extracts the ASV abundance table and sample metadata
-# Then exports them as separate TSV files for machine learning 
+# This script takes phyloseq object (.rds file) for a single analysis group originating from the combine_trunc_asvs_phyloseq.R script
+# It extracts the ASV abundance table and sample metadata, and exports them as separate TSV files ready for machine learning
 
-# Set the working directory
-setwd("/Users/haig/UC Enterprise Dropbox/Haig Bishop/celiac_microbiome_data/ML_scripts/")
 
-# Define constants
-PHYLOSEQ_OBJECT_PATH <- "D:/microbiome_sequencing_datasets/celiac_16s_datasets/core_v4_truncation/combined_phyloseq_objects/stool_ps0.rds"
-OUTPUT_ABUNDANCES_PATH <- "./input_data/stool_v4/unfiltered_asv_table.tsv"
-OUTPUT_METADATA_PATH <- "./input_data/stool_v4/unfiltered_sample_data.tsv"
-OUTPUT_TAXONOMIES_PATH <- "./input_data/stool_v4/unfiltered_taxonomies.tsv"
-
-# Create output directories if they don't exist
-dir.create(dirname(OUTPUT_ABUNDANCES_PATH), recursive = TRUE, showWarnings = FALSE)
-dir.create(dirname(OUTPUT_METADATA_PATH), recursive = TRUE, showWarnings = FALSE)
-dir.create(dirname(OUTPUT_TAXONOMIES_PATH), recursive = TRUE, showWarnings = FALSE)
-
+# SET UP ====================================
 # Load required library
 library(phyloseq)
+
+# Set the working directory
+setwd("~/Repos/meta-analysis/machine_learning/")
+
+# Input file
+# [!!!] Change groups each time
+# e.g.   duodenum_phyloseq_objects   prospective_phyloseq_objects   stool_active_phyloseq_objects   stool_treated_phyloseq_objects
+PHYLOSEQ_OBJECT_PATH <- "~/Repos/meta-analysis/preprocessing/phyloseq_objects/stool_treated_phyloseq_objects/ps0.rds"
+
+# Output files
+# [!!!] Change groups each time
+# e.g.   duodenum_active   stool_prospective   stool_active   stool_treated
+OUTPUT_ABUNDANCES_PATH <- "~/Repos/meta-analysis/machine_learning/all_data/stool_treated/unfiltered_asv_table.tsv"
+OUTPUT_METADATA_PATH <- "~/Repos/meta-analysis/machine_learning/all_data/stool_treated/unfiltered_sample_data.tsv"
+OUTPUT_TAXONOMIES_PATH <- "~/Repos/meta-analysis/machine_learning/all_data/stool_treated/unfiltered_taxonomies.tsv"
+
+# Create output directories if they don't exist
+dir.create(dirname(OUTPUT_ABUNDANCES_PATH), recursive = TRUE)
+dir.create(dirname(OUTPUT_METADATA_PATH), recursive = TRUE)
+dir.create(dirname(OUTPUT_TAXONOMIES_PATH), recursive = TRUE)
+
+
+# PROCESSING ====================================
 
 # Read the phyloseq object
 ps <- readRDS(PHYLOSEQ_OBJECT_PATH)
@@ -26,10 +36,10 @@ ps <- readRDS(PHYLOSEQ_OBJECT_PATH)
 # Extract ASV table and convert to matrix
 asv_table <- data.frame(Sample_ID = rownames(otu_table(ps)), otu_table(ps))
 
-# Print overview of ASV table (rows=ASVs, cols=samples)
-cat("ASV table dimensions:", dim(asv_table)[1], "ASVs x", dim(asv_table)[2], "samples\n")
-cat("First 3 ASVs:\n")
-print(rownames(asv_table)[1:3])
+# Print overview of ASV table (rows=samples, cols=ASVs)
+cat("ASV table dimensions:", dim(asv_table)[1], "samples x", dim(asv_table)[2], "ASVs\n")
+cat("First 3 samples:\n")
+print(asv_table$Sample_ID[1:3])
 
 # Extract sample metadata
 sample_data <- data.frame(Sample_ID = rownames(sample_data(ps)), sample_data(ps))

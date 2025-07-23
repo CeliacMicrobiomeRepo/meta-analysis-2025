@@ -1,0 +1,40 @@
+
+--- Analysis Group: duodenum_phyloseq_objects ---
+  - Stage: ps0 (Unfiltered) 
+    - Dataset: 16S_102_Bodkhe            | Min: 2195    | Median: 238953  | Max: 478061 
+    - Dataset: 16S_119_Salamon           | Min: 2106    | Median: 23068   | Max: 203923 
+    - Dataset: 16S_80_Garcia             | Min: 13856   | Median: 57864   | Max: 98473  
+  - Stage: ps1 (ASV Filtered) 
+    - Dataset: 16S_102_Bodkhe            | Min: 1583    | Median: 217272  | Max: 382137 
+    - Dataset: 16S_119_Salamon           | Min: 1169    | Median: 21617   | Max: 149474 
+    - Dataset: 16S_80_Garcia             | Min: 10663   | Median: 46020   | Max: 90485  
+
+--- Analysis Group: prospective_phyloseq_objects ---
+  - Stage: ps0 (Unfiltered) 
+    - Dataset: 16S_1211_Milletich        | Min: 1229    | Median: 38540   | Max: 75648  
+    - Dataset: 16S_68_Girdhar            | Min: 4154    | Median: 12028   | Max: 26732  
+  - Stage: ps1 (ASV Filtered) 
+    - Dataset: 16S_1211_Milletich        | Min: 1229    | Median: 35036   | Max: 68996  
+    - Dataset: 16S_68_Girdhar            | Min: 3817    | Median: 10832   | Max: 26148  
+
+--- Analysis Group: stool_active_phyloseq_objects ---
+  - Stage: ps0 (Unfiltered) 
+    - Dataset: 16S_102_Bodkhe            | Min: 74637   | Median: 183939  | Max: 302026 
+    - Dataset: 16S_49_Turjeman           | Min: 5285    | Median: 18525   | Max: 41156  
+    - Dataset: 16S_60_Shi                | Min: 23675   | Median: 50735   | Max: 96378  
+  - Stage: ps1 (ASV Filtered) 
+    - Dataset: 16S_102_Bodkhe            | Min: 39857   | Median: 131229  | Max: 231722 
+    - Dataset: 16S_49_Turjeman           | Min: 4879    | Median: 16149   | Max: 39345  
+    - Dataset: 16S_60_Shi                | Min: 20529   | Median: 42613   | Max: 87809  
+
+--- Analysis Group: stool_treated_phyloseq_objects ---
+  - Stage: ps0 (Unfiltered) 
+    - Dataset: 16S_136_Nobel             | Min: 13331   | Median: 21929   | Max: 43692  
+    - Dataset: 16S_20_Rawson             | Min: 1523    | Median: 3005    | Max: 7434   
+    - Dataset: 16S_49_Turjeman           | Min: 4371    | Median: 19480   | Max: 36677  
+    - Dataset: 16S_96_Quagliariello      | Min: 2121    | Median: 29584   | Max: 464266 
+  - Stage: ps1 (ASV Filtered) 
+    - Dataset: 16S_136_Nobel             | Min: 9482    | Median: 19656   | Max: 41399  
+    - Dataset: 16S_20_Rawson             | Min: 1367    | Median: 2805    | Max: 6152   
+    - Dataset: 16S_49_Turjeman           | Min: 4182    | Median: 17236   | Max: 32822  
+    - Dataset: 16S_96_Quagliariello      | Min: 2056    | Median: 27171   | Max: 435537 

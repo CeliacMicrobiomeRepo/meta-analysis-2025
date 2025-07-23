@@ -1,1 +1,25 @@
 .DS_Store
+silva.nr_v138_1
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+bin-me
+__pycache__
+.~lock*
+old
+
+
+# Intermediate mothur files
+mothur.*.logfile
+preprocessing/*/*_asvs.fasta
+preprocessing/*/*.align
+preprocessing/*/*.align_report
+preprocessing/*/*.filter
+preprocessing/*/*.flip.accnos
+
+
+# Results files
+all_data
+datasets
+datasets_(transformation_comparison)
