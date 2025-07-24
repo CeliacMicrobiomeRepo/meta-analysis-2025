@@ -17,7 +17,7 @@
 
 
 # Requirements:
-#  - R 4.4.0
+#  - R 4.5.1
 #  - R packages: dada2, phyloseq, ggplot2, Biostrings
 #  - SILVA databases (DADA2): silva_nr99_v138.1_train_set.fa.gz, silva_species_assignment_v138.1.fa.gz
 

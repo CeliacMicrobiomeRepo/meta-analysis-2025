@@ -11,7 +11,7 @@
 # Results: tidy tibble — Dataset | Transformation_Distance | Variable | R2 | p_value
 
 # Requirements:
-#  - R 4.4.0
+#  - R 4.5.1
 #  - R packages: phyloseq, vegan, philentropy, compositions, tibble, dplyr, purrr
 
 

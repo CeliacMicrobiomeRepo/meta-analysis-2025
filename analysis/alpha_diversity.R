@@ -4,7 +4,7 @@
 # This phyloseq object likely originated from the combine_trunc_asvs_to_phyloseq.R script
 
 # Requirements:
-#  - R 4.4.0
+#  - R 4.5.1
 #  - R packages: microbiome, meta
 
 

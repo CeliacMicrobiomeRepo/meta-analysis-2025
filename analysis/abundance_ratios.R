@@ -3,7 +3,7 @@
 # Computes per‑sample log₂(Firmicutes/Bacteroidota) and log₂(Prevotella/Bacteroides) ratios.
 
 # Requirements:
-#  - R 4.4.0
+#  - R 4.5.1
 #  - R packages: phyloseq, microbiome, dplyr, tibble, metafor
 
 

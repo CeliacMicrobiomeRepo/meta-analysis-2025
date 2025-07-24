@@ -1,0 +1,50 @@
+
+
+R version 4.5.1pandas: 2.2.3
+numpy: 1.26.4
+composition-stats: 2.0.0
+scikit-learn: 1.6.1
+xgboost: 3.0.2
+matplotlib: 3.10.0
+seaborn: 0.13.2
+
+Bioconductor        : 3.21
+
+phyloseq            : 1.52.0
+ANCOMBC             : 2.10.1
+dplyr               : 1.1.4
+tidyr               : 1.3.1
+metafor             : 4.8.0
+tibble              : 3.3.0
+readr               : 2.1.5
+stringr             : 1.5.1
+purrr               : 1.1.0
+dada2               : 1.36.0
+ggplot2             : 3.5.2
+Biostrings          : 2.76.0
+microbiome          : 1.30.0
+meta                : 8.2.0
+vegan               : 2.7.1
+philentropy         : 0.9.0
+compositions        : 2.0.8
+DECIPHER            : 3.4.0
+BiocManager         : 1.30.26
+
+
+---
+
+mothur v.1.47.0
+
+
+---
+
+Python 3.12.2
+
+pandas: 2.2.3
+numpy: 1.26.4
+composition-stats: 2.0.0
+scikit-learn: 1.6.1
+xgboost: 3.0.2
+matplotlib: 3.10.0
+seaborn: 0.13.2
+

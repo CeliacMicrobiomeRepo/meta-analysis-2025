@@ -49,7 +49,7 @@
 
 
 # Requirements:
-#  - R 4.4.0
+#  - R 4.5.1
 #  - R packages: dada2, phyloseq, DECIPHER, Biostrings, ggplot2
 #  - mothur 1.49.0
 #  - SILVA database (mothur): silva.nr_v138_1
