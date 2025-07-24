@@ -8,7 +8,7 @@ bin-me
 __pycache__
 .~lock*
 old
-run_all_ml.txt
+run_ml.txt
 
 
 # Intermediate mothur files
