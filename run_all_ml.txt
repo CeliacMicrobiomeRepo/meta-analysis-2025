@@ -1,0 +1,74 @@
+
+---
+
+conda activate all_env
+cd ~/Repos/meta-analysis/machine_learning/datasets_transformation_comparison/stool_treated_clr_after/
+python ../../03_kfold_train.py
+
+conda activate all_env
+cd ~/Repos/meta-analysis/machine_learning/datasets_transformation_comparison/stool_treated_clr_before/
+python ../../03_kfold_train.py
+
+conda activate all_env
+cd ~/Repos/meta-analysis/machine_learning/datasets_transformation_comparison/stool_treated_clr_zscore_after/
+python ../../03_kfold_train.py
+
+conda activate all_env
+cd ~/Repos/meta-analysis/machine_learning/datasets_transformation_comparison/stool_treated_clr_zscore_before/
+python ../../03_kfold_train.py
+
+---
+
+conda activate all_env
+cd ~/Repos/meta-analysis/machine_learning/datasets_transformation_comparison/stool_treated_log10_after/
+python ../../03_kfold_train.py
+
+conda activate all_env
+cd ~/Repos/meta-analysis/machine_learning/datasets_transformation_comparison/stool_treated_log10_before/
+python ../../03_kfold_train.py
+
+conda activate all_env
+cd ~/Repos/meta-analysis/machine_learning/datasets_transformation_comparison/stool_treated_log10_zscore_after/
+python ../../03_kfold_train.py
+
+conda activate all_env
+cd ~/Repos/meta-analysis/machine_learning/datasets_transformation_comparison/stool_treated_log10_zscore_before/
+python ../../03_kfold_train.py
+
+---
+
+conda activate all_env
+cd ~/Repos/meta-analysis/machine_learning/datasets_transformation_comparison/stool_treated_log10-sum_after/
+python ../../03_kfold_train.py
+
+conda activate all_env
+cd ~/Repos/meta-analysis/machine_learning/datasets_transformation_comparison/stool_treated_log10-sum_before/
+python ../../03_kfold_train.py
+
+conda activate all_env
+cd ~/Repos/meta-analysis/machine_learning/datasets_transformation_comparison/stool_treated_log10-sum_zscore_after/
+python ../../03_kfold_train.py
+
+conda activate all_env
+cd ~/Repos/meta-analysis/machine_learning/datasets_transformation_comparison/stool_treated_log10-sum_zscore_before/
+python ../../03_kfold_train.py
+
+---
+
+conda activate all_env
+cd ~/Repos/meta-analysis/machine_learning/datasets_transformation_comparison/stool_treated_tss_after/
+python ../../03_kfold_train.py
+
+conda activate all_env
+cd ~/Repos/meta-analysis/machine_learning/datasets_transformation_comparison/stool_treated_tss_before/
+python ../../03_kfold_train.py
+
+conda activate all_env
+cd ~/Repos/meta-analysis/machine_learning/datasets_transformation_comparison/stool_treated_tss_zscore_after/
+python ../../03_kfold_train.py
+
+conda activate all_env
+cd ~/Repos/meta-analysis/machine_learning/datasets_transformation_comparison/stool_treated_tss_zscore_before/
+python ../../03_kfold_train.py
+
+---

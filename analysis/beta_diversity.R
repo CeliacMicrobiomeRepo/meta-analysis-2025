@@ -27,6 +27,10 @@ library(tibble)
 library(dplyr)
 library(purrr)
 
+# Primary biological factor
+#   ("Diagnosed_Celiac" or "Will_Develop_Celiac")
+GROUPING_VAR    <- "Diagnosed_Celiac"
+
 # Create output folder
 # e.g:
 #   stool_prospective
@@ -38,10 +42,6 @@ dir.create(out_dir, recursive = TRUE)
 
 # Output file name
 out_file_name <- "beta_diversity_results_stool_active.csv"
-
-# Primary biological factor
-#   ("Diagnosed_Celiac" or "Will_Develop_Celiac")
-GROUPING_VAR    <- "Diagnosed_Celiac"
 
 
 

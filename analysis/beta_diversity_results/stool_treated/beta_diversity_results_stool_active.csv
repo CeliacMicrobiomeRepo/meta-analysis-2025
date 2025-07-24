@@ -1,0 +1,13 @@
+"16S_136_Nobel.Dataset","16S_136_Nobel.Transformation_Distance","16S_136_Nobel.Variable","16S_136_Nobel.R2","16S_136_Nobel.p_value","16S_20_Rawson.Dataset","16S_20_Rawson.Transformation_Distance","16S_20_Rawson.Variable","16S_20_Rawson.R2","16S_20_Rawson.p_value","16S_49_Turjeman.Dataset","16S_49_Turjeman.Transformation_Distance","16S_49_Turjeman.Variable","16S_49_Turjeman.R2","16S_49_Turjeman.p_value","16S_96_Quagliariello.Dataset","16S_96_Quagliariello.Transformation_Distance","16S_96_Quagliariello.Variable","16S_96_Quagliariello.R2","16S_96_Quagliariello.p_value","Dataset","Transformation_Distance","Variable","R2","p_value"
+16S_136_Nobel,TSS_JSD,Diagnosed_Celiac,0.07448536,0.001,16S_20_Rawson,TSS_JSD,Diagnosed_Celiac,0.07167486,0.465,16S_49_Turjeman,TSS_JSD,Diagnosed_Celiac,0.08473773,0.001,16S_96_Quagliariello,TSS_JSD,Diagnosed_Celiac,0.012808585,0.299,NA,NA,NA,NA,NA
+16S_136_Nobel,TSS_Bray,Diagnosed_Celiac,0.05968174,0.001,16S_20_Rawson,TSS_Bray,Diagnosed_Celiac,0.07177424,0.476,16S_49_Turjeman,TSS_Bray,Diagnosed_Celiac,0.06648197,0.001,16S_96_Quagliariello,TSS_Bray,Diagnosed_Celiac,0.012723844,0.234,NA,NA,NA,NA,NA
+16S_136_Nobel,TSS_Euclidean,Diagnosed_Celiac,0.05635935,0.001,16S_20_Rawson,TSS_Euclidean,Diagnosed_Celiac,0.06395662,0.665,16S_49_Turjeman,TSS_Euclidean,Diagnosed_Celiac,0.05738289,0.008,16S_96_Quagliariello,TSS_Euclidean,Diagnosed_Celiac,0.006863755,0.793,NA,NA,NA,NA,NA
+16S_136_Nobel,CLR_Euclidean,Diagnosed_Celiac,0.05110498,0.001,16S_20_Rawson,CLR_Euclidean,Diagnosed_Celiac,0.07999989,0.211,16S_49_Turjeman,CLR_Euclidean,Diagnosed_Celiac,0.04604835,0.001,16S_96_Quagliariello,CLR_Euclidean,Diagnosed_Celiac,0.016543716,0.011,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"Pooled","TSS_JSD","Diagnosed_Celiac",0.03459877,0.001
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"Pooled","TSS_JSD","Dataset_ID",0.11093755,0.001
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"Pooled","TSS_Bray","Diagnosed_Celiac",0.02612189,0.001
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"Pooled","TSS_Bray","Dataset_ID",0.08627202,0.001
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"Pooled","TSS_Euclidean","Diagnosed_Celiac",0.01936614,0.001
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"Pooled","TSS_Euclidean","Dataset_ID",0.05841060,0.001
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"Pooled","CLR_Euclidean","Diagnosed_Celiac",0.02044290,0.001
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"Pooled","CLR_Euclidean","Dataset_ID",0.07290498,0.001

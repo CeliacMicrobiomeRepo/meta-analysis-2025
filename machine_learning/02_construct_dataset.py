@@ -62,7 +62,7 @@ LABEL_COLUMN = "Diagnosed_Celiac"   # <-- [!!!] Change this each time
 # Construct output directory name based on options
 OUTPUT_DIR_NAME = GROUP_NAME + "_" + TRANFORMATION + ("_zscore" if APPLY_ZSCORE else "") + "_" + WHEN_FILTERING
 # Output directory path
-OUTPUT_DIR_PATH = f"./machine_learning/datasets_(transformation_comparison)/{OUTPUT_DIR_NAME}/"
+OUTPUT_DIR_PATH = f"./machine_learning/datasets_transformation_comparison/{OUTPUT_DIR_NAME}/"
 # Filtered samples metadata file path
 FILTERED_SAMPLES_TSV_OUTPUT_PATH = os.path.join(OUTPUT_DIR_PATH, "sample_labels.tsv")
 # ASV abundance matrix file path

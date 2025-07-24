@@ -1,0 +1,13 @@
+"16S_1211_Milletich.Dataset","16S_1211_Milletich.Transformation_Distance","16S_1211_Milletich.Variable","16S_1211_Milletich.R2","16S_1211_Milletich.p_value","16S_68_Girdhar.Dataset","16S_68_Girdhar.Transformation_Distance","16S_68_Girdhar.Variable","16S_68_Girdhar.R2","16S_68_Girdhar.p_value","Dataset","Transformation_Distance","Variable","R2","p_value"
+16S_1211_Milletich,TSS_JSD,Will_Develop_Celiac,0.01054163,0.847,16S_68_Girdhar,TSS_JSD,Will_Develop_Celiac,0.02378808,0.125,NA,NA,NA,NA,NA
+16S_1211_Milletich,TSS_Bray,Will_Develop_Celiac,0.01216095,0.895,16S_68_Girdhar,TSS_Bray,Will_Develop_Celiac,0.02325597,0.059,NA,NA,NA,NA,NA
+16S_1211_Milletich,TSS_Euclidean,Will_Develop_Celiac,0.01344113,0.796,16S_68_Girdhar,TSS_Euclidean,Will_Develop_Celiac,0.02073706,0.141,NA,NA,NA,NA,NA
+16S_1211_Milletich,CLR_Euclidean,Will_Develop_Celiac,0.01789679,0.606,16S_68_Girdhar,CLR_Euclidean,Will_Develop_Celiac,0.01798663,0.180,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"Pooled","TSS_JSD","Will_Develop_Celiac",0.009118241,0.380
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"Pooled","TSS_JSD","Dataset_ID",0.103699287,0.001
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"Pooled","TSS_Bray","Will_Develop_Celiac",0.010230132,0.210
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"Pooled","TSS_Bray","Dataset_ID",0.077740669,0.001
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"Pooled","TSS_Euclidean","Will_Develop_Celiac",0.009795701,0.247
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"Pooled","TSS_Euclidean","Dataset_ID",0.036055334,0.001
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"Pooled","CLR_Euclidean","Will_Develop_Celiac",0.008727098,0.341
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"Pooled","CLR_Euclidean","Dataset_ID",0.074938904,0.001

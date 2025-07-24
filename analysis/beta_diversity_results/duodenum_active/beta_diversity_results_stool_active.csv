@@ -1,0 +1,13 @@
+"16S_102_Bodkhe.Dataset","16S_102_Bodkhe.Transformation_Distance","16S_102_Bodkhe.Variable","16S_102_Bodkhe.R2","16S_102_Bodkhe.p_value","16S_119_Salamon.Dataset","16S_119_Salamon.Transformation_Distance","16S_119_Salamon.Variable","16S_119_Salamon.R2","16S_119_Salamon.p_value","16S_80_Garcia.Dataset","16S_80_Garcia.Transformation_Distance","16S_80_Garcia.Variable","16S_80_Garcia.R2","16S_80_Garcia.p_value","Dataset","Transformation_Distance","Variable","R2","p_value"
+16S_102_Bodkhe,TSS_JSD,Diagnosed_Celiac,0.03334067,0.195,16S_119_Salamon,TSS_JSD,Diagnosed_Celiac,0.04224422,0.055,16S_80_Garcia,TSS_JSD,Diagnosed_Celiac,0.08813026,0.228,NA,NA,NA,NA,NA
+16S_102_Bodkhe,TSS_Bray,Diagnosed_Celiac,0.03024163,0.221,16S_119_Salamon,TSS_Bray,Diagnosed_Celiac,0.03251769,0.072,16S_80_Garcia,TSS_Bray,Diagnosed_Celiac,0.07162887,0.341,NA,NA,NA,NA,NA
+16S_102_Bodkhe,TSS_Euclidean,Diagnosed_Celiac,0.04125800,0.068,16S_119_Salamon,TSS_Euclidean,Diagnosed_Celiac,0.03932948,0.065,16S_80_Garcia,TSS_Euclidean,Diagnosed_Celiac,0.06086349,0.509,NA,NA,NA,NA,NA
+16S_102_Bodkhe,CLR_Euclidean,Diagnosed_Celiac,0.01947335,0.537,16S_119_Salamon,CLR_Euclidean,Diagnosed_Celiac,0.02673450,0.038,16S_80_Garcia,CLR_Euclidean,Diagnosed_Celiac,0.07340744,0.261,NA,NA,NA,NA,NA
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"Pooled","TSS_JSD","Diagnosed_Celiac",0.04062137,0.001
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"Pooled","TSS_JSD","Dataset_ID",0.38167619,0.001
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"Pooled","TSS_Bray","Diagnosed_Celiac",0.03177936,0.002
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"Pooled","TSS_Bray","Dataset_ID",0.28666890,0.001
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"Pooled","TSS_Euclidean","Diagnosed_Celiac",0.03309027,0.001
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"Pooled","TSS_Euclidean","Dataset_ID",0.18541089,0.001
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"Pooled","CLR_Euclidean","Diagnosed_Celiac",0.02084598,0.029
+NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,"Pooled","CLR_Euclidean","Dataset_ID",0.30132634,0.001

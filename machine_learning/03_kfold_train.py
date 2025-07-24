@@ -63,7 +63,7 @@ start_time = time.time()
 DATASET_DIR_PATH = os.getcwd()   # e.g. "./machine_learning/datasets/duodenum_active_log10_after/"
 # Extract the analysis group from the dataset directory
 # e.g.   'duodenum_active'   'stool_prospective'   'stool_active'   'stool_treated'
-GROUP_NAME = "_".join(DATASET_DIR_PATH.split("/")[-2].split("_")[0:2])
+GROUP_NAME = "_".join(DATASET_DIR_PATH.split("/")[-1].split("_")[0:2])
 # TSV file containing metadata for each sample
 TAXONOMIES_TSV_PATH = "../../all_data/" + GROUP_NAME + "/unfiltered_taxonomies.tsv"
 # Path to the feature matrix TSV file (input)

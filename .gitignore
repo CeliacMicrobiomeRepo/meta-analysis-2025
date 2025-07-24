@@ -8,6 +8,7 @@ bin-me
 __pycache__
 .~lock*
 old
+run_all_ml.txt
 
 
 # Intermediate mothur files
@@ -19,7 +20,7 @@ preprocessing/*/*.filter
 preprocessing/*/*.flip.accnos
 
 
-# Results files
+# ML Results files
 all_data
 datasets
-datasets_(transformation_comparison)
+datasets_transformation_comparison

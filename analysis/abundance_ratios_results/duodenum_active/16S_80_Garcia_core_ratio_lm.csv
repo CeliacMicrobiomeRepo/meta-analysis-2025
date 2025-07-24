@@ -1,0 +1,3 @@
+"metric","estimate","se","t_value","p_value","n","Study"
+"log2_Firmicutes_Bacteroidota",-1.52596717873632,0.797717753561952,-1.91291615602461,0.0780414471641975,16,"16S_80_Garcia"
+"log2_Prevotella_Bacteroides",-1.8299017036462,3.04079471311782,-0.601784032230819,0.557667661382694,16,"16S_80_Garcia"

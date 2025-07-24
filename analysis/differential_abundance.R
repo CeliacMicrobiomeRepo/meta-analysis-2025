@@ -100,7 +100,7 @@ get_slope_cols <- function(df, prefix) {
 get_pq_col <- function(df, type = c("p", "q")) {
     type <- match.arg(type)
     # Match both "p_Diagnosed_CeliacTRUE" and "p_val_Diagnosed_CeliacTRUE" (same for q)
-    pat <- paste0("^", type, "(_val)?_.*Diagnosed_Celiac")
+    pat <- paste0("^", type, "(_val)?_.*", GROUPING_VAR)
     grep(pat, names(df), value = TRUE)[1]
 }
 
@@ -113,8 +113,8 @@ per_dataset_sig <- list()
 for (d in names(ps_list_clean)) {
     res <- ancombc2(
         data         = ps_list_clean[[d]],
-        fix_formula  = "Diagnosed_Celiac",
-        group        = "Diagnosed_Celiac",
+        fix_formula  = GROUPING_VAR,
+        group        = GROUPING_VAR,
         p_adj_method = "fdr",
         struc_zero   = TRUE,
         pseudo_sens  = TRUE,
@@ -147,8 +147,8 @@ for (d in names(ps_list_clean)) {
 # ── 5) Wide beta / se table for meta‑analysis ──────────────────────────────
 meta_df <- bind_rows(lapply(names(ancom_res_list), function(d) {
     df <- ancom_res_list[[d]]
-    lfc <- get_slope_cols(df, "lfc_Diagnosed_Celiac")
-    se  <- get_slope_cols(df, "se_Diagnosed_Celiac")
+    lfc <- get_slope_cols(df, paste0("lfc_", GROUPING_VAR))
+    se  <- get_slope_cols(df, paste0("se_", GROUPING_VAR))
     if (length(lfc) != 1 || length(se) != 1) return(NULL)
     df %>%
         select(taxon, all_of(lfc), all_of(se)) %>%
@@ -195,8 +195,8 @@ write.csv(pooled_df, file = file.path(out_dir, "pooled_asv_results.csv"), row.na
 # ── 7) Combined (all‑samples) ANCOM‑BC² run ────────────────────────────────
 comb_res <- ancombc2(
     data         = ps,
-    fix_formula  = "Diagnosed_Celiac",
-    group        = "Diagnosed_Celiac",
+    fix_formula  = GROUPING_VAR,
+    group        = GROUPING_VAR,
     p_adj_method = "fdr",
     struc_zero   = TRUE,
     pseudo_sens  = TRUE,
@@ -252,7 +252,7 @@ comb <- read_csv(
   show_col_types = FALSE
 )
 
-lfc_comb <- grep("^lfc_.*Diagnosed_Celiac", names(comb), value = TRUE)[1]
+lfc_comb <- grep(paste0("^lfc_.*", GROUPING_VAR), names(comb), value = TRUE)[1]
 
 comb_sig <- comb %>%
   transmute(
@@ -274,7 +274,7 @@ per_dataset <- lapply(dataset_files, function(f) {
   dname <- str_remove(basename(f), "^ancombc2_|\\.csv$")
   df    <- read_csv(f, show_col_types = FALSE)
 
-  lfc_col <- grep("^lfc_.*Diagnosed_Celiac", names(df), value = TRUE)[1]
+  lfc_col <- grep(paste0("^lfc_.*", GROUPING_VAR), names(df), value = TRUE)[1]
 
   df %>%
     transmute(
