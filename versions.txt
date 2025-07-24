@@ -1,12 +1,6 @@
 
 
-R version 4.5.1pandas: 2.2.3
-numpy: 1.26.4
-composition-stats: 2.0.0
-scikit-learn: 1.6.1
-xgboost: 3.0.2
-matplotlib: 3.10.0
-seaborn: 0.13.2
+R version 4.5.1
 
 Bioconductor        : 3.21
 
