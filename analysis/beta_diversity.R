@@ -3,11 +3,11 @@
 # Takes a phyloseq object with non-transformed counts and filters ASVs to remove zero variance ASVs
 # This phyloseq object likely originated from the combine_trunc_asvs_to_phyloseq.R script
 
-# For each phyloseq object in `ps_list` plus one pooled object (`pooled_ps`):
+# For each phyloseq object in `ps_list`:
 #   1. Apply Total‑Sum Scaling (TSS) → Jensen–Shannon (JSD), Bray–Curtis, Euclidean.
 #   2. Apply centred‑log‑ratio (CLR) → Euclidean.
 #   3. Run PERMANOVA (adonis2) on a primary variable (`group_var`).
-#      When analysing the pooled object, also test `dataset_id_var`.
+#      When analysing the pooled object, also test `Dataset_ID`.
 # Results: tidy tibble — Dataset | Transformation_Distance | Variable | R2 | p_value
 
 # Requirements:
@@ -87,12 +87,6 @@ ps_list_no_bad <- lapply(
         prune_taxa(keep, ps)
     })
 ps_list <- ps_list_no_bad
-
-
-
-# !?!?!?
-# pooled_ps (pooled samples within each group as one phyloseq object)
-# !?!?!?
 
 
 

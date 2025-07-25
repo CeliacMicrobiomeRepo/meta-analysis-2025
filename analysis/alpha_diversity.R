@@ -36,13 +36,13 @@ out_file_name <- "meta_summary_metrics.csv"
 # ── 1) Load Dataset for Analysis ────────────────────────────
 
 # Load the phyloseq object for the selected analysis
-# The ps1 object should be used (filtered ASVs, but non-transformed counts)
+# The ps0 object should be used (unfiltered ASVs)
 # e.g:
 #   prospective_phyloseq_objects
 #   stool_active_phyloseq_objects
 #   stool_treated_phyloseq_objects
 #   duodenum_phyloseq_objects
-ps <- readRDS("~/Repos/meta-analysis/preprocessing/phyloseq_objects/stool_active_phyloseq_objects/ps1.rds")
+ps <- readRDS("~/Repos/meta-analysis/preprocessing/phyloseq_objects/stool_active_phyloseq_objects/ps0.rds")
 
 # 1. Coerce your sample_data to a data.frame
 sd_df <- as(sample_data(ps), "data.frame")
