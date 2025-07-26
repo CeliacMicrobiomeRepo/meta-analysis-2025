@@ -99,7 +99,7 @@ Maximum length of the truncated ASVs: 248
 
 Assigning taxonomy to truncated sequences...
 Writing outputs for this dataset
-Dataset done: ~/Repos/celiac-repository/16S_datasets/16S_49_Turjeman/ 
+Dataset done: /home/haig/Repos/celiac-repository/16S_datasets/16S_49_Turjeman/ 
 
 
 ---
@@ -114,7 +114,7 @@ Maximum length of the truncated ASVs: 251
 
 Assigning taxonomy to truncated sequences...
 Writing outputs for this dataset
-Dataset done: ~/Repos/celiac-repository/16S_datasets/16S_136_Nobel/ 
+Dataset done: /home/haig/Repos/celiac-repository/16S_datasets/16S_136_Nobel/ 
 
 
 ---
@@ -129,7 +129,7 @@ Maximum length of the truncated ASVs: 249
 
 Assigning taxonomy to truncated sequences...
 Writing outputs for this dataset
-Dataset done: ~/Repos/celiac-repository/16S_datasets/16S_96_Quagliariello/ 
+Dataset done: /home/haig/Repos/celiac-repository/16S_datasets/16S_96_Quagliariello/ 
 
 
 ---
@@ -144,6 +144,6 @@ Maximum length of the truncated ASVs: 248
 
 Assigning taxonomy to truncated sequences...
 Writing outputs for this dataset
-Dataset done: ~/Repos/celiac-repository/16S_datasets/16S_20_Rawson/ 
+Dataset done: /home/haig/Repos/celiac-repository/16S_datasets/16S_20_Rawson/ 
 Done!
 Data frames and plots have been saved to the output directory: /home/haig/Repos/meta-analysis/preprocessing/v4_truncation_stool_treated 

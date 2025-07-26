@@ -244,7 +244,7 @@ Maximum length of the truncated ASVs: 232
 
 Assigning taxonomy to truncated sequences...
 Writing outputs for this dataset
-Dataset done: ~/Repos/celiac-repository/16S_datasets/16S_49_Turjeman/ 
+Dataset done: /home/haig/Repos/celiac-repository/16S_datasets/16S_49_Turjeman/ 
 
 
 ---
@@ -259,7 +259,7 @@ Maximum length of the truncated ASVs: 237
 
 Assigning taxonomy to truncated sequences...
 Writing outputs for this dataset
-Dataset done: ~/Repos/celiac-repository/16S_datasets/16S_102_Bodkhe/ 
+Dataset done: /home/haig/Repos/celiac-repository/16S_datasets/16S_102_Bodkhe/ 
 
 
 ---
@@ -274,5 +274,5 @@ Maximum length of the truncated ASVs: 270
 
 Assigning taxonomy to truncated sequences...
 Writing outputs for this dataset
-Dataset done: ~/Repos/celiac-repository/16S_datasets/16S_60_Shi/ 
+Dataset done: /home/haig/Repos/celiac-repository/16S_datasets/16S_60_Shi/ 
 Done!

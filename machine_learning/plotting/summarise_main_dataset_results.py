@@ -12,15 +12,15 @@ import pandas as pd
 # Inputs ------------------------------------------
 # List of dataset directories with metadata
 DATASET_DIR_PATHS_AND_NAMES = [
-    ("~/Repos/meta-analysis/machine_learning/datasets/stool_prospective_log10_after/", "Stool", "Prospective"),
-    ("~/Repos/meta-analysis/machine_learning/datasets/stool_active_log10_after/", "Stool", "Active"),
-    ("~/Repos/meta-analysis/machine_learning/datasets/stool_treated_log10_after/", "Stool", "Treated"),
-    ("~/Repos/meta-analysis/machine_learning/datasets/duodenum_active_log10_after/", "Duodenal", "Active"),
+    ("/home/haig/Repos/meta-analysis/machine_learning/datasets_main/stool_prospective_tss_after/", "Stool", "Prospective"),
+    ("/home/haig/Repos/meta-analysis/machine_learning/datasets_main/stool_active_tss_after/", "Stool", "Active"),
+    ("/home/haig/Repos/meta-analysis/machine_learning/datasets_main/stool_treated_tss_after/", "Stool", "Treated"),
+    ("/home/haig/Repos/meta-analysis/machine_learning/datasets_main/duodenum_active_tss_after/", "Duodenal", "Active"),
 ]
 
 # Output ------------------------------------------
 # Path to save the combined TSV file
-OUTPUT_FILE_PATH = "~/Repos/meta-analysis/machine_learning/results/results_summary_main_datasets.tsv"
+OUTPUT_FILE_PATH = "/home/haig/Repos/meta-analysis/machine_learning/results/main_results_summary.tsv"
 # Make sure the output directory exists
 os.makedirs(os.path.dirname(os.path.expanduser(OUTPUT_FILE_PATH)), exist_ok=True)
 
@@ -78,4 +78,4 @@ combined_df = combined_df[['Dataset', 'Body Site', 'Stage',
                            'KFOLD AUC', 'LODO AUC', 'Mean XSET AUC']]
 
 # Export the combined DataFrame to a TSV file
-combined_df.to_csv(OUTPUT_FILE_PATH, sep='\t', index=False)
+combined_df.to_csv(OUTPUT_FILE_PATH, sep='\t', index=False, float_format='%.4f')

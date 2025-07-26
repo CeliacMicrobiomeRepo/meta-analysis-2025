@@ -20,22 +20,22 @@ EVALUATION_METHOD = "logo"  # logo or kfold
 
 # Input datasets to plot
 DATASET_DIR_PATHS = [
-    "~/Repos/meta-analysis/machine_learning/datasets/duodenum_active_log10_after/",
-    "~/Repos/meta-analysis/machine_learning/datasets/stool_active_log10_after/",
-    "~/Repos/meta-analysis/machine_learning/datasets/stool_prospective_log10_after/",
-    "~/Repos/meta-analysis/machine_learning/datasets/stool_treated_log10_after/",
+    "/home/haig/Repos/meta-analysis/machine_learning/datasets_main/stool_prospective_tss_after/",
+    "/home/haig/Repos/meta-analysis/machine_learning/datasets_main/stool_active_tss_after/",
+    "/home/haig/Repos/meta-analysis/machine_learning/datasets_main/stool_treated_tss_after/",
+    "/home/haig/Repos/meta-analysis/machine_learning/datasets_main/duodenum_active_tss_after/",
 ]
 
 # Output directory
-OUTPUT_DIR_PATH = "~/Repos/meta-analysis/machine_learning/results/model_comparison/"
+OUTPUT_DIR_PATH = "/home/haig/Repos/meta-analysis/machine_learning/results/model_comparison/"
 
 
 # Main ------------------------------------------
 for DATASET_DIR_PATH in DATASET_DIR_PATHS:
 
     # Set up ------------------------------------------
-    # Get dataset name e.g. stool_active_log10_after
-    DATASET_NAME = os.path.basename(DATASET_DIR_PATH)
+    # Get dataset name e.g. stool_active_tss_after
+    DATASET_NAME = DATASET_DIR_PATH.rstrip("/").split("/")[-1]
 
     # Get input results path
     RESULTS_SUBDIR_FILE_NAME = EVALUATION_METHOD + "_results/best_models_results.tsv"
@@ -44,7 +44,7 @@ for DATASET_DIR_PATH in DATASET_DIR_PATHS:
     # Plot title
     TITLE = "Different Model Performances on " + EVALUATION_METHOD.upper() + " Within The " + DATASET_NAME + " Dataset"
     # Output file name
-    FILE_NAME = "model_comparison_" + DATASET_NAME + "_" + EVALUATION_METHOD
+    FILE_NAME = DATASET_NAME + "_" + EVALUATION_METHOD
 
     # Print dataset name 
     print("\nPlotting " + DATASET_NAME + "...")

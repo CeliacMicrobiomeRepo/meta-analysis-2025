@@ -25,7 +25,7 @@ GROUPING_VAR    <- "Diagnosed_Celiac"
 #   stool_active
 #   stool_treated
 #   duodenum_active
-out_dir <- "~/Repos/meta-analysis/analysis/alpha_diversity_results/stool_active"
+out_dir <- "/home/haig/Repos/meta-analysis/analysis/alpha_diversity_results/stool_active"
 dir.create(out_dir, recursive = TRUE)
 
 # Output file name
@@ -42,7 +42,7 @@ out_file_name <- "meta_summary_metrics.csv"
 #   stool_active_phyloseq_objects
 #   stool_treated_phyloseq_objects
 #   duodenum_phyloseq_objects
-ps <- readRDS("~/Repos/meta-analysis/preprocessing/phyloseq_objects/stool_active_phyloseq_objects/ps0.rds")
+ps <- readRDS("/home/haig/Repos/meta-analysis/preprocessing/phyloseq_objects/stool_active_phyloseq_objects/ps0.rds")
 
 # 1. Coerce your sample_data to a data.frame
 sd_df <- as(sample_data(ps), "data.frame")

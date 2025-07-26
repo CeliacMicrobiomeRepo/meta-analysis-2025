@@ -16,16 +16,16 @@ import seaborn as sns
 
 
 # Evalulation method
-EVALUATION_METHOD = "logo"  # logo or kfold
+EVALUATION_METHOD = "kfold"  # logo or kfold
 
 # Inputs ------------------------------------------
 
 # Input datasets to plot
 DATASET_DIR_PATHS_AND_NAMES = [
-    ("~/Repos/meta-analysis/machine_learning/datasets/duodenum_active_log10_after/", "Duodenum Active"),
-    ("~/Repos/meta-analysis/machine_learning/datasets/stool_active_log10_after/", "Stool Active"),
-    ("~/Repos/meta-analysis/machine_learning/datasets/stool_prospective_log10_after/", "Stool Prospective"),
-    ("~/Repos/meta-analysis/machine_learning/datasets/stool_treated_log10_after/", "Stool Treated"),
+    ("/home/haig/Repos/meta-analysis/machine_learning/datasets_main/stool_prospective_tss_after/", "Stool Prospective"),
+    ("/home/haig/Repos/meta-analysis/machine_learning/datasets_main/stool_active_tss_after/", "Stool Active"),
+    ("/home/haig/Repos/meta-analysis/machine_learning/datasets_main/stool_treated_tss_after/", "Stool Treated"),
+    ("/home/haig/Repos/meta-analysis/machine_learning/datasets_main/duodenum_active_tss_after/", "Duodenum Active"),
 ]
 
 # Which results to plot
@@ -34,13 +34,13 @@ RESULTS_SUBDIR_FILE_NAME = EVALUATION_METHOD + "_results/best_models_results.tsv
 
 
 # Outputs ------------------------------------------
-OUTPUT_DIR_PATH = os.path.expanduser("~/Repos/meta-analysis/machine_learning/results")
+OUTPUT_DIR_PATH = os.path.expanduser("/home/haig/Repos/meta-analysis/machine_learning/results/main/")
 
 # Name of plot files to write
 FILE_NAME = "main_comparison_" + EVALUATION_METHOD
 
 # Title of plot
-TITLE = "Best Model Performance Across Different Datasets (" + EVALUATION_METHOD + ")"
+TITLE = "Best Model Performance Across Different Datasets (" + EVALUATION_METHOD.upper() + ")"
 
 
 
@@ -105,7 +105,7 @@ plt.tight_layout()
 # Save as PNG
 plt.savefig(os.path.join(OUTPUT_DIR_PATH, FILE_NAME + '.png'), dpi=300, bbox_inches='tight')
 # Save as SVG
-plt.savefig(os.path.join(OUTPUT_DIR_PATH, FILE_NAME + '.svg'), format='svg', bbox_inches='tight')
+# plt.savefig(os.path.join(OUTPUT_DIR_PATH, FILE_NAME + '.svg'), format='svg', bbox_inches='tight')
 
 # Show plot
 plt.show()

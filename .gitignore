@@ -24,3 +24,6 @@ preprocessing/*/*.flip.accnos
 all_data
 datasets
 datasets_transformation_comparison
+*.pkl
+
+

@@ -13,11 +13,23 @@ from sklearn.metrics import auc
 import os
 
 # Options ------------------------------------------
-TSV_FILE = 'machine_learning/datasets/stool_treated_log10_after/kfold_results/best_models/roc_mlp_data.tsv'
-TITLE = 'Stool Treated MLP K-fold ROC Curve'
+ANALYSIS_GROUP = "duodenum_active"
+EVALUATION_METHOD = "kfold"
+BEST_MODEL = True
+MODEL_NAME = "rf" # <- used only if BEST_MODEL is False
+
+if BEST_MODEL:
+    # Read summary_best_model.tsv to get the model name
+    summary_best_model_path = '/home/haig/Repos/meta-analysis/machine_learning/datasets_main/' + ANALYSIS_GROUP + '_tss_after/' + EVALUATION_METHOD + '_results/summary_best_model.tsv'
+    summary_best_model_df = pd.read_csv(summary_best_model_path, sep='\t')
+    # Get 2nd column name
+    MODEL_NAME = summary_best_model_df.columns[1].lower()
+
+TSV_FILE = '/home/haig/Repos/meta-analysis/machine_learning/datasets_main/' + ANALYSIS_GROUP + '_tss_after/' + EVALUATION_METHOD + '_results/best_models/roc_' + MODEL_NAME + '_data.tsv'
+TITLE = ANALYSIS_GROUP + ' ' + MODEL_NAME.upper() + ' ' + EVALUATION_METHOD.upper() + ' ROC Curve'
 OUT_FILE = TITLE.lower().replace(' ', '_').replace('-', '_') + '.png'
 
-OUTPUT_DIR = '~/Repos/meta-analysis/machine_learning/results/roc_curves/'
+OUTPUT_DIR = '/home/haig/Repos/meta-analysis/machine_learning/results/roc_plots/'
 
 # Main ------------------------------------------
 # Read the data

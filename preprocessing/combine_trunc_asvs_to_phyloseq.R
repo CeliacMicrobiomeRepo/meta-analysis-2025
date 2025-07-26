@@ -33,8 +33,8 @@ library(Biostrings)
 
 
 # Path to samples.tsv and low_read_samples.tsv files (from Celiac Microbiome Repository https://github.com/CeliacMicrobiomeRepo/celiac-repository/)
-ALL_SAMPLES_TSV <- "~/Repos/celiac-repository/all_samples.tsv"
-LOW_READ_SAMPLES_TSV <- "~/Repos/celiac-repository/low_read_samples.tsv"
+ALL_SAMPLES_TSV <- "/home/haig/Repos/celiac-repository/all_samples.tsv"
+LOW_READ_SAMPLES_TSV <- "/home/haig/Repos/celiac-repository/low_read_samples.tsv"
 
 # OPTIONS ===================================
 # Directories of datasets to include
@@ -43,35 +43,35 @@ LOW_READ_SAMPLES_TSV <- "~/Repos/celiac-repository/low_read_samples.tsv"
 #   - asv_abundances_transposed.tsv: TSV file with ASV abundances
 DATASET_DIRS <- c(
     # V4 datasets ------------
-    # "~/Repos/celiac-repository/16S_datasets/16S_27_Fornasaro/",
-    "~/Repos/celiac-repository/16S_datasets/16S_49_Turjeman/",
-    "~/Repos/celiac-repository/16S_datasets/16S_102_Bodkhe/",
-    # "~/Repos/celiac-repository/16S_datasets/16S_50_Bibbo/",
-    "~/Repos/celiac-repository/16S_datasets/16S_80_Garcia/",
-    "~/Repos/celiac-repository/16S_datasets/16S_68_Girdhar/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_27_Fornasaro/",
+    "/home/haig/Repos/celiac-repository/16S_datasets/16S_49_Turjeman/",
+    "/home/haig/Repos/celiac-repository/16S_datasets/16S_102_Bodkhe/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_50_Bibbo/",
+    "/home/haig/Repos/celiac-repository/16S_datasets/16S_80_Garcia/",
+    "/home/haig/Repos/celiac-repository/16S_datasets/16S_68_Girdhar/",
 
     # V3-V4 datasets ------------
-    "~/Repos/celiac-repository/16S_datasets/16S_136_Nobel/",
-    "~/Repos/celiac-repository/16S_datasets/16S_60_Shi/",
-    "~/Repos/celiac-repository/16S_datasets/16S_96_Quagliariello/",
-    # "~/Repos/celiac-repository/16S_datasets/16S_227_Oscarsson/",
-    # "~/Repos/celiac-repository/16S_datasets/16S_99_Lionetti/",
-    # "~/Repos/celiac-repository/16S_datasets/16S_5_Senicar/",
-    # "~/Repos/celiac-repository/16S_datasets/16S_27_Federica/",
-    "~/Repos/celiac-repository/16S_datasets/16S_20_Rawson/",
-    # "~/Repos/celiac-repository/16S_datasets/16S_24_Giacomin/",
-    # "~/Repos/celiac-repository/16S_datasets/16S_62_Tian/",
-    "~/Repos/celiac-repository/16S_datasets/16S_1211_Milletich/",
-    "~/Repos/celiac-repository/16S_datasets/16S_119_Salamon/"
+    "/home/haig/Repos/celiac-repository/16S_datasets/16S_136_Nobel/",
+    "/home/haig/Repos/celiac-repository/16S_datasets/16S_60_Shi/",
+    "/home/haig/Repos/celiac-repository/16S_datasets/16S_96_Quagliariello/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_227_Oscarsson/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_99_Lionetti/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_5_Senicar/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_27_Federica/",
+    "/home/haig/Repos/celiac-repository/16S_datasets/16S_20_Rawson/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_24_Giacomin/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_62_Tian/",
+    "/home/haig/Repos/celiac-repository/16S_datasets/16S_1211_Milletich/",
+    "/home/haig/Repos/celiac-repository/16S_datasets/16S_119_Salamon/"
 
     # V4-V6 datasets ------------
-    # "~/Repos/celiac-repository/16S_datasets/16S_56_Laffaldano/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_56_Laffaldano/",
 
     # non-V4 datasets ------------
-    # "~/Repos/celiac-repository/16S_datasets/16S_20_Caminero/",
-    # "~/Repos/celiac-repository/16S_datasets/16S_179_Verdu/",
-    # "~/Repos/celiac-repository/16S_datasets/16S_25_Francavilla/",
-    # "~/Repos/celiac-repository/16S_datasets/16S_39_Olivares/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_20_Caminero/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_179_Verdu/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_25_Francavilla/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_39_Olivares/",
     )
 # Each dataset directory should contain the following 2 files:
 SEQS_FNA_FILE_PATH <- "v4_truncation_stool_prospective/seqs.fna"
@@ -84,7 +84,7 @@ SPECIES_ASSIGNMENT_SET <- "/mnt/secondary/16S_databases/silva_species_assignment
 
 
 # Output paths
-OUT_DIR <- "~/Repos/meta-analysis/preprocessing/phyloseq_objects"
+OUT_DIR <- "/home/haig/Repos/meta-analysis/preprocessing/phyloseq_objects"
 ANALYSIS_DIR_NAME <- "prospective_phyloseq_objects"   # <--- [!!!] Change per analysis
 # e.g:
 #   prospective_phyloseq_objects

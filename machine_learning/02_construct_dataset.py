@@ -30,16 +30,16 @@ import numpy as np
 # Main options ------------------------------------------
 # The analysis group to use 
 # Options:     'duodenum_active'   'stool_prospective'   'stool_active'   'stool_treated'
-GROUP_NAME = "stool_treated"   # <-- [!!!] Change this each time
+GROUP_NAME = "duodenum_active"   # <-- [!!!] Change this each time
 # Transform with  
 # Options:     'tss'   'log10'   'log10-sum'   'clr'
-TRANFORMATION = 'clr'  
+TRANFORMATION = 'tss'  
 # Apply Z-score to transformed abundances (to each bacteria) 
 # Options:     False   True
-APPLY_ZSCORE = True             
+APPLY_ZSCORE = False             
 # Filter before or after transformation?
 # Options:     'before'   'after'
-WHEN_FILTERING = 'before'    
+WHEN_FILTERING = 'after'    
 # Pseudo count
 PSEUDO_COUNT = 1e-6
 
@@ -62,7 +62,7 @@ LABEL_COLUMN = "Diagnosed_Celiac"   # <-- [!!!] Change this each time
 # Construct output directory name based on options
 OUTPUT_DIR_NAME = GROUP_NAME + "_" + TRANFORMATION + ("_zscore" if APPLY_ZSCORE else "") + "_" + WHEN_FILTERING
 # Output directory path
-OUTPUT_DIR_PATH = f"./machine_learning/datasets_transformation_comparison/{OUTPUT_DIR_NAME}/"
+OUTPUT_DIR_PATH = f"./machine_learning/datasets_main/{OUTPUT_DIR_NAME}/"
 # Filtered samples metadata file path
 FILTERED_SAMPLES_TSV_OUTPUT_PATH = os.path.join(OUTPUT_DIR_PATH, "sample_labels.tsv")
 # ASV abundance matrix file path

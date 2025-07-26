@@ -28,7 +28,7 @@ This script is designed to be run from the command line inside the dataset direc
 Example:
 ```
 conda activate all_env
-cd ~/Repos/meta-analysis/machine_learning/datasets/duodenum_active_log10_after/
+cd /home/haig/Repos/meta-analysis/machine_learning/datasets_main/duodenum_active_log10_after/
 python ../../03_kfold_train.py
 ```
 
@@ -60,7 +60,7 @@ start_time = time.time()
 
 # Options ------------------------------------------
 # Path to the dataset directory (also output directory)
-DATASET_DIR_PATH = os.getcwd()   # e.g. "./machine_learning/datasets/duodenum_active_log10_after/"
+DATASET_DIR_PATH = os.getcwd()   # e.g. "./machine_learning/datasets_main/duodenum_active_log10_after/"
 # Extract the analysis group from the dataset directory
 # e.g.   'duodenum_active'   'stool_prospective'   'stool_active'   'stool_treated'
 GROUP_NAME = "_".join(DATASET_DIR_PATH.split("/")[-1].split("_")[0:2])

@@ -29,7 +29,7 @@ GROUPING_VAR    <- "Diagnosed_Celiac"
 #   stool_active
 #   stool_treated
 #   duodenum_active
-out_dir <- "~/Repos/meta-analysis/analysis/constrained_beta_diversity_results/stool_active"
+out_dir <- "/home/haig/Repos/meta-analysis/analysis/constrained_beta_diversity_results/stool_active"
 dir.create(out_dir, recursive = TRUE)
 
 # Output file names
@@ -50,7 +50,7 @@ out_var_explained_file_name <- "var_explained.csv"
 #   stool_active_phyloseq_objects
 #   stool_treated_phyloseq_objects
 #   duodenum_phyloseq_objects
-ps <- readRDS("~/Repos/meta-analysis/preprocessing/phyloseq_objects/stool_active_phyloseq_objects/ps2.rds")
+ps <- readRDS("/home/haig/Repos/meta-analysis/preprocessing/phyloseq_objects/stool_active_phyloseq_objects/ps2.rds")
 
 
 

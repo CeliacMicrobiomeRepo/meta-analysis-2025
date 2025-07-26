@@ -2,16 +2,16 @@
 --- Checking Input Files ---
 Checking for seqs.fna files:
                                                                                                     path
-1       ~/Repos/celiac-repository/16S_datasets/16S_49_Turjeman//v4_truncation_stool_prospective/seqs.fna
-2        ~/Repos/celiac-repository/16S_datasets/16S_102_Bodkhe//v4_truncation_stool_prospective/seqs.fna
-3         ~/Repos/celiac-repository/16S_datasets/16S_80_Garcia//v4_truncation_stool_prospective/seqs.fna
-4        ~/Repos/celiac-repository/16S_datasets/16S_68_Girdhar//v4_truncation_stool_prospective/seqs.fna
-5         ~/Repos/celiac-repository/16S_datasets/16S_136_Nobel//v4_truncation_stool_prospective/seqs.fna
-6            ~/Repos/celiac-repository/16S_datasets/16S_60_Shi//v4_truncation_stool_prospective/seqs.fna
-7  ~/Repos/celiac-repository/16S_datasets/16S_96_Quagliariello//v4_truncation_stool_prospective/seqs.fna
-8         ~/Repos/celiac-repository/16S_datasets/16S_20_Rawson//v4_truncation_stool_prospective/seqs.fna
-9    ~/Repos/celiac-repository/16S_datasets/16S_1211_Milletich//v4_truncation_stool_prospective/seqs.fna
-10      ~/Repos/celiac-repository/16S_datasets/16S_119_Salamon//v4_truncation_stool_prospective/seqs.fna
+1       /home/haig/Repos/celiac-repository/16S_datasets/16S_49_Turjeman//v4_truncation_stool_prospective/seqs.fna
+2        /home/haig/Repos/celiac-repository/16S_datasets/16S_102_Bodkhe//v4_truncation_stool_prospective/seqs.fna
+3         /home/haig/Repos/celiac-repository/16S_datasets/16S_80_Garcia//v4_truncation_stool_prospective/seqs.fna
+4        /home/haig/Repos/celiac-repository/16S_datasets/16S_68_Girdhar//v4_truncation_stool_prospective/seqs.fna
+5         /home/haig/Repos/celiac-repository/16S_datasets/16S_136_Nobel//v4_truncation_stool_prospective/seqs.fna
+6            /home/haig/Repos/celiac-repository/16S_datasets/16S_60_Shi//v4_truncation_stool_prospective/seqs.fna
+7  /home/haig/Repos/celiac-repository/16S_datasets/16S_96_Quagliariello//v4_truncation_stool_prospective/seqs.fna
+8         /home/haig/Repos/celiac-repository/16S_datasets/16S_20_Rawson//v4_truncation_stool_prospective/seqs.fna
+9    /home/haig/Repos/celiac-repository/16S_datasets/16S_1211_Milletich//v4_truncation_stool_prospective/seqs.fna
+10      /home/haig/Repos/celiac-repository/16S_datasets/16S_119_Salamon//v4_truncation_stool_prospective/seqs.fna
    exists
 1   FALSE
 2   FALSE
@@ -26,16 +26,16 @@ Checking for seqs.fna files:
 
 Checking for asv_abundances_transposed.tsv files:
                                                                                                                          path
-1       ~/Repos/celiac-repository/16S_datasets/16S_49_Turjeman//v4_truncation_stool_prospective/asv_abundances_transposed.tsv
-2        ~/Repos/celiac-repository/16S_datasets/16S_102_Bodkhe//v4_truncation_stool_prospective/asv_abundances_transposed.tsv
-3         ~/Repos/celiac-repository/16S_datasets/16S_80_Garcia//v4_truncation_stool_prospective/asv_abundances_transposed.tsv
-4        ~/Repos/celiac-repository/16S_datasets/16S_68_Girdhar//v4_truncation_stool_prospective/asv_abundances_transposed.tsv
-5         ~/Repos/celiac-repository/16S_datasets/16S_136_Nobel//v4_truncation_stool_prospective/asv_abundances_transposed.tsv
-6            ~/Repos/celiac-repository/16S_datasets/16S_60_Shi//v4_truncation_stool_prospective/asv_abundances_transposed.tsv
-7  ~/Repos/celiac-repository/16S_datasets/16S_96_Quagliariello//v4_truncation_stool_prospective/asv_abundances_transposed.tsv
-8         ~/Repos/celiac-repository/16S_datasets/16S_20_Rawson//v4_truncation_stool_prospective/asv_abundances_transposed.tsv
-9    ~/Repos/celiac-repository/16S_datasets/16S_1211_Milletich//v4_truncation_stool_prospective/asv_abundances_transposed.tsv
-10      ~/Repos/celiac-repository/16S_datasets/16S_119_Salamon//v4_truncation_stool_prospective/asv_abundances_transposed.tsv
+1       /home/haig/Repos/celiac-repository/16S_datasets/16S_49_Turjeman//v4_truncation_stool_prospective/asv_abundances_transposed.tsv
+2        /home/haig/Repos/celiac-repository/16S_datasets/16S_102_Bodkhe//v4_truncation_stool_prospective/asv_abundances_transposed.tsv
+3         /home/haig/Repos/celiac-repository/16S_datasets/16S_80_Garcia//v4_truncation_stool_prospective/asv_abundances_transposed.tsv
+4        /home/haig/Repos/celiac-repository/16S_datasets/16S_68_Girdhar//v4_truncation_stool_prospective/asv_abundances_transposed.tsv
+5         /home/haig/Repos/celiac-repository/16S_datasets/16S_136_Nobel//v4_truncation_stool_prospective/asv_abundances_transposed.tsv
+6            /home/haig/Repos/celiac-repository/16S_datasets/16S_60_Shi//v4_truncation_stool_prospective/asv_abundances_transposed.tsv
+7  /home/haig/Repos/celiac-repository/16S_datasets/16S_96_Quagliariello//v4_truncation_stool_prospective/asv_abundances_transposed.tsv
+8         /home/haig/Repos/celiac-repository/16S_datasets/16S_20_Rawson//v4_truncation_stool_prospective/asv_abundances_transposed.tsv
+9    /home/haig/Repos/celiac-repository/16S_datasets/16S_1211_Milletich//v4_truncation_stool_prospective/asv_abundances_transposed.tsv
+10      /home/haig/Repos/celiac-repository/16S_datasets/16S_119_Salamon//v4_truncation_stool_prospective/asv_abundances_transposed.tsv
    exists
 1   FALSE
 2   FALSE

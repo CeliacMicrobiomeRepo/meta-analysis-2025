@@ -20,13 +20,13 @@ SHOW_BEST_MODEL = True
 # Only used if SHOW_BEST_MODEL is False
 MODEL_NAME = "xgboost"
 # Output directory for heatmaps
-OUTPUT_DIR_PATH = "~/Repos/meta-analysis/machine_learning/results/xset_heatmaps/"
+OUTPUT_DIR_PATH = "/home/haig/Repos/meta-analysis/machine_learning/results/xset_heatmaps/"
 # Dataset directories to plot heatmaps for
 ALL_DATASET_DIR_PATHS = [
-    "~/Repos/meta-analysis/machine_learning/datasets/duodenum_active_log10_after",
-    "~/Repos/meta-analysis/machine_learning/datasets/stool_active_log10_after",
-    "~/Repos/meta-analysis/machine_learning/datasets/stool_prospective_log10_after",
-    "~/Repos/meta-analysis/machine_learning/datasets/stool_treated_log10_after",
+    "/home/haig/Repos/meta-analysis/machine_learning/datasets_main/duodenum_active_tss_after",
+    "/home/haig/Repos/meta-analysis/machine_learning/datasets_main/stool_active_tss_after",
+    "/home/haig/Repos/meta-analysis/machine_learning/datasets_main/stool_prospective_tss_after",
+    "/home/haig/Repos/meta-analysis/machine_learning/datasets_main/stool_treated_tss_after",
 ]
 
 
@@ -94,7 +94,7 @@ for DATASET_DIR_PATH in ALL_DATASET_DIR_PATHS:
     # Save as PNG
     plt.savefig(os.path.join(OUTPUT_DIR_PATH, FILE_NAME + '.png'), dpi=300, bbox_inches='tight')
     # Save as SVG
-    plt.savefig(os.path.join(OUTPUT_DIR_PATH, FILE_NAME + '.svg'), format='svg', bbox_inches='tight')
+    # plt.savefig(os.path.join(OUTPUT_DIR_PATH, FILE_NAME + '.svg'), format='svg', bbox_inches='tight')
 
     # Show plot
     plt.show()

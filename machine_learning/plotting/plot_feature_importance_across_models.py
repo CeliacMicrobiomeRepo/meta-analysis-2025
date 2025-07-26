@@ -23,15 +23,15 @@ BEST_MODEL_ONLY = True
 
 # Using taxonomic labels for ASVs
 USE_TAX_LABELS = True
-LABEL_RANK = 5              # 0=Domain, 1=Phylum, 2=Class, 3=Order, 4=Family, 5=Genus, 6=Species
-RANK_NAMES = ["Domain", "Phylum", "Class", "Order", "Family", "Genus", "Species"]
+LABEL_RANKS = [4, 5, 6]              # 0=Domain, 1=Phylum, 2=Class, 3=Order, 4=Family, 5=Genus, 6=Species
+RANK_NAMES = ["d", "p", "c", "o", "f", "g", "sp"]
 
 # Inputs ------------------------------------------
 ALL_DATASET_DIR_PATHS = [
-    "~/Repos/meta-analysis/machine_learning/datasets/stool_prospective_log10_after",
-    "~/Repos/meta-analysis/machine_learning/datasets/stool_active_log10_after",
-    "~/Repos/meta-analysis/machine_learning/datasets/stool_treated_log10_after",
-    "~/Repos/meta-analysis/machine_learning/datasets/duodenum_active_log10_after"
+    "/home/haig/Repos/meta-analysis/machine_learning/datasets_main/stool_prospective_tss_after",
+    "/home/haig/Repos/meta-analysis/machine_learning/datasets_main/stool_active_tss_after",
+    "/home/haig/Repos/meta-analysis/machine_learning/datasets_main/stool_treated_tss_after",
+    "/home/haig/Repos/meta-analysis/machine_learning/datasets_main/duodenum_active_tss_after"
 ]
 # Subdirectory file names
 RESULTS_SUBDIR_FILE_NAME = "kfold_results/feature_importance_best_models.tsv"
@@ -39,7 +39,7 @@ PERFORMANCE_RESULTS_SUBDIR_FILE_NAME = "kfold_results/best_models_results.tsv"
 
 
 # Outputs ------------------------------------------
-OUTPUT_DIR_PATH = "~/Repos/meta-analysis/machine_learning/results/feature_importance_across models/"
+OUTPUT_DIR_PATH = "/home/haig/Repos/meta-analysis/machine_learning/results/feature_importance/"
 
 
 
@@ -48,14 +48,21 @@ def get_taxonomy_label(taxonomy_string):
     return the label at the specified rank"""
     # Split the taxonomy string into a list of taxonomic levels
     taxonomy_levels = taxonomy_string.split(";")
-    # Check if we have the taxonomic resolution at the specified rank
-    if len(taxonomy_levels) > LABEL_RANK:
-        # Return the taxonomic classification at the specified rank
-        return taxonomy_levels[LABEL_RANK].strip()
-    else:
-        # Insufficient taxonomic resolution, "No ID at {RANK}"
-        return "No_ID_at_" + RANK_NAMES[LABEL_RANK]
 
+    # Get the label at each rank
+    label = ''
+    for rank in LABEL_RANKS:
+        # Check if we have the taxonomic resolution at the specified rank
+        if len(taxonomy_levels) > rank:
+            # Return the taxonomic classification at the specified rank
+            label += taxonomy_levels[rank].strip() + " | "
+        else:
+            # Insufficient taxonomic resolution, "No ID at {RANK}"
+            label += "no_ID_rank_" + RANK_NAMES[rank] + " | "
+            break
+    # Remove the trailing " | "
+    label = label.rstrip(" | ")
+    return label
 
 
 
@@ -67,15 +74,13 @@ for DATASET_DIR_PATH in ALL_DATASET_DIR_PATHS:
     RESULTS_PATH = os.path.join(DATASET_DIR_PATH, RESULTS_SUBDIR_FILE_NAME)
     PERFORMANCE_RESULTS_PATH = os.path.join(DATASET_DIR_PATH, PERFORMANCE_RESULTS_SUBDIR_FILE_NAME)
     DATASET_NAME = os.path.basename(DATASET_DIR_PATH)
-    # TAXONOMY_TABLE_PATH = "./input_data/duodenal_v4/unfiltered_taxonomies.tsv" # CHANGE THIS + ONLY NEEDED FOR ASVs
-    # TAXONOMY_DF = pd.read_csv(TAXONOMY_TABLE_PATH, sep='\t')
 
     # Outputs ------------------------------------------
-    FILE_NAME = ("all" if ALL_FEATURES else "top" + str(TOP_N_FEATURES)) + "_feature_importances_" + DATASET_NAME
+    FILE_NAME = ("all" if ALL_FEATURES else "top" + str(TOP_N_FEATURES)) + "_features_" + DATASET_NAME
 
     PART_A = 'All' if ALL_FEATURES else ('Top ' + str(TOP_N_FEATURES))
     PART_B = "for The Best Model" if BEST_MODEL_ONLY else "Across Best Models"
-    TITLE = PART_A + ' Feature Importances ' + PART_B + ' for The ' + DATASET_NAME + ' Dataset'
+    TITLE = DATASET_NAME + ": " + PART_A + ' Feature Importances ' + PART_B
 
 
 
@@ -87,27 +92,25 @@ for DATASET_DIR_PATH in ALL_DATASET_DIR_PATHS:
     # Read the feature importance data
     feature_importance_df = pd.read_csv(RESULTS_PATH, sep='\t')
 
-    # Fix labels if ASV dataset ---
-    # If ASV dataset (no Genus labels)
-    if 'asv' in DATASET_DIR_PATH.lower():
-        # If using taxonomic labels for ASVs
-        if USE_TAX_LABELS:
-            # Replace ASV column with taxonomic labels at the specified rank
-            feature_importance_df['ASV'] = feature_importance_df['Taxonomy'].apply(get_taxonomy_label)
-            # If there are duplicates, add a suffix to their ASV labels (e.g. Turicibacter_1, Turicibacter_2, etc.)
-            duplicate_mask = feature_importance_df['ASV'].duplicated(keep=False)
-            if duplicate_mask.any():
-                for name in feature_importance_df.loc[duplicate_mask, 'ASV'].unique():
-                    # Get indices of duplicates for this name
-                    dup_indices = feature_importance_df[feature_importance_df['ASV'] == name].index
-                    # Add numbered suffix to duplicates
-                    feature_importance_df.loc[dup_indices, 'ASV'] = [
-                        f'{name}_({i+1})' for i in range(len(dup_indices))
-                    ]
-        # Else using made up ASV IDs
-        else:
-            # Replace ASV sequences with IDs
-            feature_importance_df['ASV'] = [f'ASV_{i+1}' for i in range(len(feature_importance_df))]
+    # Fix labels of ASVs ---
+    # If using taxonomic labels for ASVs
+    if USE_TAX_LABELS:
+        # Replace ASV column with taxonomic labels at the specified rank
+        feature_importance_df['ASV'] = feature_importance_df['Taxonomy'].apply(get_taxonomy_label)
+        # If there are duplicates, add a suffix to their ASV labels (e.g. Turicibacter_1, Turicibacter_2, etc.)
+        duplicate_mask = feature_importance_df['ASV'].duplicated(keep=False)
+        if duplicate_mask.any():
+            for name in feature_importance_df.loc[duplicate_mask, 'ASV'].unique():
+                # Get indices of duplicates for this name
+                dup_indices = feature_importance_df[feature_importance_df['ASV'] == name].index
+                # Add numbered suffix to duplicates
+                feature_importance_df.loc[dup_indices, 'ASV'] = [
+                    f'{name}_({i+1})' for i in range(len(dup_indices))
+                ]
+    # Else using made up ASV IDs
+    else:
+        # Replace ASV sequences with IDs
+        feature_importance_df['ASV'] = [f'ASV_{i+1}' for i in range(len(feature_importance_df))]
 
     if BEST_MODEL_ONLY:
         # Identify the best model
@@ -138,7 +141,7 @@ for DATASET_DIR_PATH in ALL_DATASET_DIR_PATHS:
     sns.set(style="whitegrid")
 
     # Initialize the matplotlib figure with 3:4 aspect ratio
-    plt.figure(figsize=(9, 12))  # Width x Height for 3:4 aspect ratio
+    plt.figure(figsize=(12, 12))
 
     if DOTS:
         # Create a stripplot (dots) instead of boxplot
@@ -173,8 +176,8 @@ for DATASET_DIR_PATH in ALL_DATASET_DIR_PATHS:
     plt.savefig(png_output_path, dpi=300, bbox_inches='tight', format='png')
 
     # Save the plot as SVG
-    svg_output_path = os.path.join(OUTPUT_DIR_PATH, FILE_NAME + '.svg')
-    plt.savefig(svg_output_path, dpi=300, bbox_inches='tight', format='svg')
+    # svg_output_path = os.path.join(OUTPUT_DIR_PATH, FILE_NAME + '.svg')
+    # plt.savefig(svg_output_path, dpi=300, bbox_inches='tight', format='svg')
 
     # Show the plot
     plt.show()

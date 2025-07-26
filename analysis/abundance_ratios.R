@@ -27,7 +27,7 @@ GROUPING_VAR    <- "Diagnosed_Celiac"
 #   stool_active
 #   stool_treated
 #   duodenum_active
-out_dir <- "~/Repos/meta-analysis/analysis/abundance_ratios_results/stool_active"
+out_dir <- "/home/haig/Repos/meta-analysis/analysis/abundance_ratios_results/stool_active"
 dir.create(out_dir, recursive = TRUE)
 
 # Avoids log2(0)
@@ -44,7 +44,7 @@ PSEUDOCOUNT <- 1e-6
 #   stool_active_phyloseq_objects
 #   stool_treated_phyloseq_objects
 #   duodenum_phyloseq_objects
-ps <- readRDS("~/Repos/meta-analysis/preprocessing/phyloseq_objects/stool_active_phyloseq_objects/ps1.rds")
+ps <- readRDS("/home/haig/Repos/meta-analysis/preprocessing/phyloseq_objects/stool_active_phyloseq_objects/ps1.rds")
 
 # 1. Coerce your sample_data to a data.frame
 sd_df <- as(sample_data(ps), "data.frame")

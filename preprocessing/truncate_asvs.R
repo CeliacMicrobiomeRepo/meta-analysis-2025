@@ -72,35 +72,35 @@ library(ggplot2)
 #   - asv_abundances.tsv: TSV file with ASV abundances (samples as rows, sequences as columns)
 DATASET_DIRS <- c(
     # V4 datasets ------------
-    # "~/Repos/celiac-repository/16S_datasets/16S_27_Fornasaro/",
-    # "~/Repos/celiac-repository/16S_datasets/16S_49_Turjeman/",         # Stool Active & Stool Treated
-    # "~/Repos/celiac-repository/16S_datasets/16S_102_Bodkhe/",          # Stool Active & Duodenal Active
-    # "~/Repos/celiac-repository/16S_datasets/16S_50_Bibbo/",
-    # "~/Repos/celiac-repository/16S_datasets/16S_80_Garcia/",           # Duodenal Active
-    "~/Repos/celiac-repository/16S_datasets/16S_68_Girdhar/",          # Stool Prospective
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_27_Fornasaro/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_49_Turjeman/",         # Stool Active & Stool Treated
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_102_Bodkhe/",          # Stool Active & Duodenal Active
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_50_Bibbo/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_80_Garcia/",           # Duodenal Active
+    "/home/haig/Repos/celiac-repository/16S_datasets/16S_68_Girdhar/",          # Stool Prospective
 
     # V3-V4 datasets ------------
-    # "~/Repos/celiac-repository/16S_datasets/16S_136_Nobel/",           # Stool Treated
-    # "~/Repos/celiac-repository/16S_datasets/16S_60_Shi/",              # Stool Active
-    # "~/Repos/celiac-repository/16S_datasets/16S_96_Quagliariello/",    # Stool Treated
-    # "~/Repos/celiac-repository/16S_datasets/16S_227_Oscarsson/",
-    # "~/Repos/celiac-repository/16S_datasets/16S_99_Lionetti/",
-    # "~/Repos/celiac-repository/16S_datasets/16S_5_Senicar/",
-    # "~/Repos/celiac-repository/16S_datasets/16S_27_Federica/",
-    # "~/Repos/celiac-repository/16S_datasets/16S_20_Rawson/",           # Stool Treated
-    # "~/Repos/celiac-repository/16S_datasets/16S_24_Giacomin/",
-    # "~/Repos/celiac-repository/16S_datasets/16S_62_Tian/",
-    "~/Repos/celiac-repository/16S_datasets/16S_1211_Milletich/"      # Stool Prospective
-    # "~/Repos/celiac-repository/16S_datasets/16S_119_Salamon/"          # Duodenal Active
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_136_Nobel/",           # Stool Treated
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_60_Shi/",              # Stool Active
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_96_Quagliariello/",    # Stool Treated
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_227_Oscarsson/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_99_Lionetti/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_5_Senicar/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_27_Federica/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_20_Rawson/",           # Stool Treated
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_24_Giacomin/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_62_Tian/",
+    "/home/haig/Repos/celiac-repository/16S_datasets/16S_1211_Milletich/"      # Stool Prospective
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_119_Salamon/"          # Duodenal Active
 
     # V4-V6 datasets ------------
-    # "~/Repos/celiac-repository/16S_datasets/16S_56_Laffaldano/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_56_Laffaldano/",
 
     # non-V4 datasets ------------
-    # "~/Repos/celiac-repository/16S_datasets/16S_20_Caminero/",
-    # "~/Repos/celiac-repository/16S_datasets/16S_179_Verdu/",
-    # "~/Repos/celiac-repository/16S_datasets/16S_25_Francavilla/",
-    # "~/Repos/celiac-repository/16S_datasets/16S_39_Olivares/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_20_Caminero/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_179_Verdu/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_25_Francavilla/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_39_Olivares/",
     )
 
 # Subdirectory to output combination into for each dataset
@@ -122,7 +122,7 @@ ABOUT_TXT_STR <- "This truncation is of all V4 datasets included in the meta-ana
 SAVE_PHYLOSEQ_AND_TAXONOMY <- TRUE
 
 # Set the working directory (for mothur)
-WORKING_DIR <- "~/Repos/meta-analysis/preprocessing"
+WORKING_DIR <- "/home/haig/Repos/meta-analysis/preprocessing"
 setwd(WORKING_DIR)
 
 # Create the subdirectory
