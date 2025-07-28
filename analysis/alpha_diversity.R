@@ -199,7 +199,7 @@ for(id in names(ps_list)) {
 # ── 4) Perform Meta-Analysis Across Datasets ───────────────────────────
 
 # load them back & do random‐effects meta‐analysis per metric
-files <- list.files(pattern = "_alpha_analysis\\.csv$")
+files <- list.files(path = out_dir, pattern = "_alpha_analysis\\.csv$", full.names = TRUE)
 allres <- do.call(rbind, lapply(files, read.csv, stringsAsFactors=FALSE))
 
 meta_out <- lapply(unique(allres$Metric), function(metric_name) {
