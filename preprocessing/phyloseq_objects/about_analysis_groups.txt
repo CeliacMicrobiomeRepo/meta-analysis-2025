@@ -30,6 +30,29 @@ Std length: 0.7256583
 
 
 
+Number of ASVs Per Group:
+
+Stool Prospective:
+ - # ASVs before filtering = 2172
+ - # ASVs after filtering = 124
+
+Stool Active:
+ - # ASVs before filtering = 7958
+ - # ASVs after filtering = 225
+
+Stool Treated:
+ - # ASVs before filtering = 4428
+ - # ASVs after filtering = 224
+
+Duodenal Active:
+ - # ASVs before filtering = 5559
+ - # ASVs after filtering = 221
+
+
+
+
+
+
 Groups for Analysis:
    Stool Prospective CeD   (N=120, HC=60, CeD=60)   [Across 2 Datasets]
      - 16S_1211_Milletich:             52 samples [HC=26, CeD=26]
