@@ -16,7 +16,7 @@ import seaborn as sns
 
 # Options ------------------------------------------
 # Evalulation method
-EVALUATION_METHOD = "logo"  # logo or kfold
+EVALUATION_METHOD = "lodo"  # lodo or kfold
 
 # Input datasets to plot
 DATASET_DIR_PATHS = [
@@ -62,7 +62,7 @@ for DATASET_DIR_PATH in DATASET_DIR_PATHS:
     # Dynamically get fold names based on validation method
     if EVALUATION_METHOD == "kfold":
         fold_names = [f'Fold_{i}' for i in range(1, 11)]
-    else:  # logo
+    else:  # lodo
         # Get all column names that aren't 'Replicate' or 'Model'
         fold_names = [col for col in df.columns if col not in ['Replicate', 'Model', 'Mean']]
 

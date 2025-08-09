@@ -41,12 +41,12 @@ for dataset_dir, body_site, stage in DATASET_DIR_PATHS_AND_NAMES:
     total_samples = summary_df.loc[0, 'Total Included Samples']
     
     # Read mean_xset_results.tsv and get maximum Mean AUC
-    mean_xset_path = os.path.join(dataset_dir, "logo_results", "mean_xset_results.tsv")
+    mean_xset_path = os.path.join(dataset_dir, "lodo_results", "mean_xset_results.tsv")
     mean_xset_df = pd.read_csv(mean_xset_path, sep='\t')
     mean_xset_auc = mean_xset_df['Mean AUC'].max()
     
     # Read summary_best_model.tsv for LODO AUC
-    lodo_summary_path = os.path.join(dataset_dir, "logo_results", "summary_best_model.tsv")
+    lodo_summary_path = os.path.join(dataset_dir, "lodo_results", "summary_best_model.tsv")
     lodo_df = pd.read_csv(lodo_summary_path, sep='\t', header=None)
     lodo_auc = float(lodo_df.iloc[0,0])
     

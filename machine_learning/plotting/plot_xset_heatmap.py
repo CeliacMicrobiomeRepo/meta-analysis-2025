@@ -37,14 +37,14 @@ for DATASET_DIR_PATH in ALL_DATASET_DIR_PATHS:
 
     # If showing best model, need to identify it from best_models_results.tsv
     if SHOW_BEST_MODEL:
-        PERFORMANCE_RESULTS_SUBDIR_FILE_NAME = "logo_results/best_models_results.tsv"
+        PERFORMANCE_RESULTS_SUBDIR_FILE_NAME = "lodo_results/best_models_results.tsv"
         PERFORMANCE_RESULTS_PATH = os.path.join(DATASET_DIR_PATH, PERFORMANCE_RESULTS_SUBDIR_FILE_NAME)
         # Read performance results and get best model
         df = pd.read_csv(PERFORMANCE_RESULTS_PATH, sep='\t')
         MODEL_NAME = df[df['Replicate'] == 'Average'].loc[df[df['Replicate'] == 'Average']['Mean'].idxmax(), 'Model']
 
     # Path to cross-dataset validation results
-    RESULTS_SUBDIR_FILE_NAME = f"logo_results/xset_results_{MODEL_NAME}.tsv"
+    RESULTS_SUBDIR_FILE_NAME = f"lodo_results/xset_results_{MODEL_NAME}.tsv"
     RESULTS_PATH = os.path.join(DATASET_DIR_PATH, RESULTS_SUBDIR_FILE_NAME)
 
 

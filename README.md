@@ -33,7 +33,7 @@ The `machine_learning` directory contains all Python and R scripts used to condu
  - `01_phylogseq_to_tsv.R` - Script to extract data from a phyloseq object for ML
  - `02_construct_dataset.py` - Script to construct a specific ASV-level ML dataset
  - `03_kfold_train.py` - Script to perform K-fold training on an ML dataset
- - `03_logo_xset_train.py` - Script to perform LOGO and XSET training on an ML dataset
+ - `03_lodo_xset_train.py` - Script to perform LODO and XSET training on an ML dataset
  - `custom_sklearn.py` - Script that includes a custom MLP model with dropout
 
 ## Requirements & Licenses

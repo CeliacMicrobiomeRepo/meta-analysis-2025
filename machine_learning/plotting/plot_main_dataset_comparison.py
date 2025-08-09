@@ -16,7 +16,7 @@ import seaborn as sns
 
 
 # Evalulation method
-EVALUATION_METHOD = "kfold"  # logo or kfold
+EVALUATION_METHOD = "kfold"  # lodo or kfold
 
 # Inputs ------------------------------------------
 

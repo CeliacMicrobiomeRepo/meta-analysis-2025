@@ -1,9 +1,9 @@
 """
-logo_xset_train.py
+lodo_xset_train.py
 
 Description:
  - Trials 5 models (SVM, LR, XGBOOST, RF, MLP) with different hyperparameter combinations
- - Performs LOGO (Leave-One-Group-Out where groups are datasets) cross-validation with 5 replicates
+ - Performs LODO (Leave-One-Group-Out where groups are datasets) cross-validation with 5 replicates
  - Determines the best model and hyperparameters based on mean AUC across folds and replicates
  - Optionally performs cross-dataset validation (XSET) using the best hyperparameters of each of the 5 models
 
@@ -34,7 +34,7 @@ Example:
 ```
 conda activate all_env
 cd /home/haig/Repos/meta-analysis/machine_learning/datasets_main/duodenum_active_log10_after/
-python ../../03_logo_xset_train.py
+python ../../03_lodo_xset_train.py
 ```
 
 """
@@ -72,7 +72,7 @@ FEATURES_TSV_PATH = os.path.join(DATASET_DIR_PATH, "sample_asv_abundances.tsv")
 # Path to the labels TSV file (input)
 LABELS_TSV_PATH = os.path.join(DATASET_DIR_PATH, "sample_labels.tsv")
 # Output subdirectory
-OUTPUT_SUBDIR_PATH = os.path.join(DATASET_DIR_PATH, "logo_results/")
+OUTPUT_SUBDIR_PATH = os.path.join(DATASET_DIR_PATH, "lodo_results/")
 # Create the output subdirectory if it doesn't exist
 if not os.path.exists(OUTPUT_SUBDIR_PATH):
     os.makedirs(OUTPUT_SUBDIR_PATH)
@@ -162,7 +162,7 @@ unique_datasets = np.unique(groups)
 
 
 # Hyperparameter grid search ------------------------------------------
-# For every hyperparameter combination of each model, perform LOGO cross-validation NUM_REPLICATES times
+# For every hyperparameter combination of each model, perform LODO cross-validation NUM_REPLICATES times
 # Store the mean AUC for each hyperparameter combination -> this tells us the best hyperparameters for each model
 
 # To store results for each model
@@ -217,11 +217,11 @@ for model_name in ['mlp', 'xgboost', 'svm', 'lr', 'rf']:
             if hasattr(model, 'probability'):
                 model.set_params(probability=True)
             # Initialize leave-one-dataset-out cross-validator
-            logo = LeaveOneGroupOut()
+            lodo = LeaveOneGroupOut()
             # Store AUCs for this replicate
             replicate_auc_scores = []
             # Perform cross-validation
-            for train_idx, test_idx in logo.split(X_shuffled, y_shuffled, groups_shuffled):
+            for train_idx, test_idx in lodo.split(X_shuffled, y_shuffled, groups_shuffled):
                 X_train, X_test = X_shuffled.iloc[train_idx], X_shuffled.iloc[test_idx]
                 y_train, y_test = y_shuffled[train_idx], y_shuffled[test_idx]
                 try:
@@ -299,7 +299,7 @@ print(f"Model results saved to {model_results_txt_path}")
 
 
 # Collect Best Model Results ----------------------------------
-# For each model, perform LOGO cross-validation NUM_REPLICATES times on the best hyperparameters
+# For each model, perform LODO cross-validation NUM_REPLICATES times on the best hyperparameters
 # We run these again so that we know the high performance was not due to random chance
 # Store the mean AUC for each model -> this tells us the performance of the best hyperparameters of the 5 models
 # We also collect a bunch of useful data and objects for later analysis
@@ -353,11 +353,11 @@ for model_name in model_classes.keys():
         if hasattr(model, 'probability'):
             model.set_params(probability=True)
         # Initialize leave-one-dataset-out cross-validator
-        logo = LeaveOneGroupOut()
+        lodo = LeaveOneGroupOut()
         # Store AUCs for this replicate per group
         replicate_group_aucs = {}
         # Perform cross-validation
-        for train_idx, test_idx in logo.split(X_shuffled, y_shuffled, groups_shuffled):
+        for train_idx, test_idx in lodo.split(X_shuffled, y_shuffled, groups_shuffled):
             X_train, X_test = X_shuffled.iloc[train_idx], X_shuffled.iloc[test_idx]
             y_train, y_test = y_shuffled[train_idx], y_shuffled[test_idx]
             test_group = groups_shuffled[test_idx][0]
