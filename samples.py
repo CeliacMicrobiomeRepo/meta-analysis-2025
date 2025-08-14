@@ -68,9 +68,6 @@ def print_sample_summary(filtered_df):
 # Read the TSV file
 df = pd.read_csv(DATASET_FILE, sep='\t')
 
-# TEMPORARY: Remove the datasets 16S_22_Ozturk and 16S_101_Roque
-df = df[~df['Dataset_ID'].isin(['16S_22_Ozturk', '16S_101_Roque'])]
-
 # Add a column for the "Original_Dataset_ID" (altered later on)
 df['Original_Dataset_ID'] = df['Dataset_ID']
 print("-" * 50)
