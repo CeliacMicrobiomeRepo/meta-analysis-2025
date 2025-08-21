@@ -43,39 +43,44 @@ LOW_READ_SAMPLES_TSV <- "/home/haig/Repos/celiac-repository/low_read_samples.tsv
 #   - asv_abundances_transposed.tsv: TSV file with ASV abundances
 DATASET_DIRS <- c(
     # V4 datasets ------------
-    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_27_Fornasaro/",
-    "/home/haig/Repos/celiac-repository/16S_datasets/16S_49_Turjeman/",
-    "/home/haig/Repos/celiac-repository/16S_datasets/16S_102_Bodkhe/",
-    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_50_Bibbo/",
-    "/home/haig/Repos/celiac-repository/16S_datasets/16S_80_Garcia/",
-    "/home/haig/Repos/celiac-repository/16S_datasets/16S_68_Girdhar/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_27_Fornasaro",
+    "/home/haig/Repos/celiac-repository/16S_datasets/16S_49_Turjeman",
+    "/home/haig/Repos/celiac-repository/16S_datasets/16S_102_Bodkhe",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_50_Bibbo",
+    "/home/haig/Repos/celiac-repository/16S_datasets/16S_80_Garcia",
+    "/home/haig/Repos/celiac-repository/16S_datasets/16S_68_Girdhar",
 
     # V3-V4 datasets ------------
-    "/home/haig/Repos/celiac-repository/16S_datasets/16S_136_Nobel/",
-    "/home/haig/Repos/celiac-repository/16S_datasets/16S_60_Shi/",
-    "/home/haig/Repos/celiac-repository/16S_datasets/16S_96_Quagliariello/",
-    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_227_Oscarsson/",
-    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_99_Lionetti/",
-    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_5_Senicar/",
-    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_27_Federica/",
-    "/home/haig/Repos/celiac-repository/16S_datasets/16S_20_Rawson/",
-    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_24_Giacomin/",
-    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_62_Tian/",
-    "/home/haig/Repos/celiac-repository/16S_datasets/16S_1211_Milletich/",
-    "/home/haig/Repos/celiac-repository/16S_datasets/16S_119_Salamon/"
+    "/home/haig/Repos/celiac-repository/16S_datasets/16S_136_Nobel",
+    "/home/haig/Repos/celiac-repository/16S_datasets/16S_60_Shi",
+    "/home/haig/Repos/celiac-repository/16S_datasets/16S_96_Quagliariello",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_227_Oscarsson",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_99_Lionetti",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_5_Senicar",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_27_Federica",
+    "/home/haig/Repos/celiac-repository/16S_datasets/16S_20_Rawson",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_24_Giacomin",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_62_Tian",
+    "/home/haig/Repos/celiac-repository/16S_datasets/16S_1211_Milletich",
+    "/home/haig/Repos/celiac-repository/16S_datasets/16S_119_Salamon"
 
     # V4-V6 datasets ------------
-    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_56_Laffaldano/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_56_Laffaldano",
 
     # non-V4 datasets ------------
-    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_20_Caminero/",
-    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_179_Verdu/",
-    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_25_Francavilla/",
-    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_39_Olivares/",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_20_Caminero",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_179_Verdu",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_25_Francavilla",
+    # "/home/haig/Repos/celiac-repository/16S_datasets/16S_39_Olivares",
     )
 # Each dataset directory should contain the following 2 files:
-SEQS_FNA_FILE_PATH <- "v4_truncation_stool_prospective/seqs.fna"
-ASV_ABUNDANCES_FILE_PATH <- "v4_truncation_stool_prospective/asv_abundances_transposed.tsv"
+# e.g.
+#   v4_truncation_stool_prospective/*
+#   v4_truncation_stool_active/*
+#   v4_truncation_stool_treated/*
+#   v4_truncation_duodenal_active/*
+SEQS_FNA_FILE_PATH <- "v4_truncation_stool_active/seqs.fna"   # <--- [!!!] Change per analysis
+ASV_ABUNDANCES_FILE_PATH <- "v4_truncation_stool_active/asv_abundances_transposed.tsv"   # <--- [!!!] Change per analysis
 
 
 # Paths to databases
@@ -85,7 +90,7 @@ SPECIES_ASSIGNMENT_SET <- "/mnt/secondary/16S_databases/silva_species_assignment
 
 # Output paths
 OUT_DIR <- "/home/haig/Repos/meta-analysis/preprocessing/phyloseq_objects"
-ANALYSIS_DIR_NAME <- "prospective_phyloseq_objects"   # <--- [!!!] Change per analysis
+ANALYSIS_DIR_NAME <- "stool_active_phyloseq_objects"   # <--- [!!!] Change per analysis
 # e.g:
 #   prospective_phyloseq_objects
 #   stool_active_phyloseq_objects
@@ -118,7 +123,7 @@ sink(file.path(OUT_DIR, ANALYSIS_DIR_NAME, "combination_console_output.log"), sp
 # Column containing dataset IDs
 DATASET_ID_COLUMN = "Dataset_ID"
 # Columns to use as labels
-LABEL_COLUMN = "Will_Develop_Celiac"   # <--- [!!!] Change per analysis ("Diagnosed_Celiac" or "Will_Develop_Celiac")
+LABEL_COLUMN = "Diagnosed_Celiac"   # <--- [!!!] Change per analysis ("Diagnosed_Celiac" or "Will_Develop_Celiac")
 # Exclude data
 EXCLUDE_ROWS_WITH_VALUES = list(
   # Exclude incomplete data
@@ -133,13 +138,13 @@ EXCLUDE_ROWS_WITH_VALUES = list(
 FILTERING_INCLUSION_RULES = list(               # <--- [!!!] Change per analysis
 
   # Stool Prospecitve ---
-  "Will_Develop_Celiac %in% c(TRUE, FALSE)",
-  "Sample_Site == 'stool'"
+  # "Will_Develop_Celiac %in% c(TRUE, FALSE)",
+  # "Sample_Site == 'stool'"
 
 
   # Stool Active ---
-  # "(Diagnosed_Celiac == TRUE & Gluten_Free_Diet == FALSE) | (Diagnosed_Celiac == FALSE & Gluten_Free_Diet == FALSE)",
-  # "Sample_Site == 'stool'"
+  "(Diagnosed_Celiac == TRUE & Gluten_Free_Diet == FALSE) | (Diagnosed_Celiac == FALSE & Gluten_Free_Diet == FALSE)",
+  "Sample_Site == 'stool'"
 
 
   # Stool Treated ---
@@ -153,7 +158,7 @@ FILTERING_INCLUSION_RULES = list(               # <--- [!!!] Change per analysis
 
 )
 # Downsample Milletich dataset to 26 control samples
-DOWNSAMPLE_MILLETICH <- TRUE   # <--- [!!!] Change per analysis (use for prospective analysis)
+DOWNSAMPLE_MILLETICH <- FALSE   # <--- [!!!] Change per analysis (use for prospective analysis)
 # Exclude non-illumina datasets
 EXCLUDE_NON_ILLUMINA_DATA <- TRUE
 # Exclude specific datasets
@@ -165,16 +170,12 @@ EXCLUDE_SAMPLES <- unique(read.delim(LOW_READ_SAMPLES_TSV, header = TRUE)[, 2])
 
 
 # ASV filtering options --------------
-# Minimum average abundance across a dataset (in X% of datasets) for a taxonomic unit to be included
-MIN_AVERAGE_ABUNDANCE_IN_DATASET <- 0.001
-# Minimum proportion of all samples in a dataset (in X% of datasets) for a taxonomic unit to be included
-MIN_PREVALENCE_IN_SAMPLES_IN_DATASET <- 0.1
-# ...X proportion of the datasets:
-IN_N_PROPORTION_DATASETS <- 0.0   # <--- This is always 0.0, because there are only 2-4 datasets - In future with more datasets we can change this to ~0.4
+# Each ASV must occur in at least this proportion of samples at a non-zero abundance across all samples
+MIN_PREVALENCE_OVER_ALL_SAMPLES <- 0.1
 
 # A final filter to Samples ------------------
 # Must have at least this proportion of their abundance made of the core ASVs
-MIN_TOTAL_ABUNDANCE_CORE_ASVS <- 0.25 # (this should never happen anyway)
+MIN_TOTAL_ABUNDANCE_CORE_ASVS <- 0.01 # (this should never happen anyway)
 
 
 # Load sequence table files ----------------------------------------
@@ -250,7 +251,21 @@ if (length(seqtab_list) == 0) {
 # Load metadata -----------------------------------
 
 # Get the metadata for all samples (rows are samples and columns are metadata)
-all_samples_table <- read.delim(ALL_SAMPLES_TSV, header = TRUE, row.names= 1)
+all_samples_table <- read.delim(ALL_SAMPLES_TSV, header = TRUE, row.names= 2)
+
+# Convert columns with only "True"/"False" strings to logical type
+for (colname in names(all_samples_table)) {
+  # Check if the column is of character type
+  if (is.character(all_samples_table[[colname]])) {
+    unique_vals <- unique(na.omit(all_samples_table[[colname]]))
+    # Check if all unique non-NA values are some form of "true" or "false"
+    if (length(unique_vals) > 0 && all(tolower(unique_vals) %in% c("true", "false"))) {
+      cat("Converting column '", colname, "' to logical.\n", sep="")
+      all_samples_table[[colname]] <- as.logical(all_samples_table[[colname]])
+    }
+  }
+}
+cat("\n")
 
 # Filter samples ----------------------------------------
 # Make a deep copy
@@ -410,6 +425,9 @@ write.table(filtered_sample_table, FILTERED_SAMPLES_TSV_OUTPUT, sep = "\t", row.
 
 
 
+
+
+
 # Combine ----------------------------------------
 
 # Merge all the loaded sequence tables
@@ -436,46 +454,38 @@ ps0
 
 
 
+
 # Determine which ASVs should be filtered out ----------------------------
 
-sample_data_df <- as.data.frame(sample_data(ps0))
-datasets <- unique(sample_data_df[[DATASET_ID_COLUMN]])
-tss_counts <- sweep(otu_table(ps0), 1, sample_sums(ps0), "/")
+# An ASV must occur in at least 10% of samples (rounded down) at a non-zero abundance.
+otu <- as.matrix(otu_table(ps0))
+min_samples <- floor(MIN_PREVALENCE_OVER_ALL_SAMPLES * nsamples(ps0))
+asv_to_keep <- colSums(otu > 0) >= min_samples
 
-# Abundance filtering
-asv_means_by_dataset <- sapply(datasets, function(ds) {
-  ds_samples <- rownames(sample_data_df[sample_data_df[[DATASET_ID_COLUMN]] == ds, , drop=FALSE])
-  colMeans(tss_counts[ds_samples, , drop=FALSE])
-})
-abundance_threshold_datasets <- max(1, round(IN_N_PROPORTION_DATASETS * length(datasets)))
-asv_abundance_count <- rowSums(asv_means_by_dataset >= MIN_AVERAGE_ABUNDANCE_IN_DATASET)
-asv_to_keep_abundance <- asv_abundance_count >= abundance_threshold_datasets
-
-cat("ASVs failing abundance filter:", sum(!asv_to_keep_abundance), "\n")
-
-# Prevalence filtering
-asv_prevalence_by_dataset <- sapply(datasets, function(ds) {
-  ds_samples <- rownames(sample_data_df[sample_data_df[[DATASET_ID_COLUMN]] == ds, , drop=FALSE])
-  colMeans((otu_table(ps0)[ds_samples, , drop=FALSE]) > 0)
-})
-prevalence_threshold_datasets <- max(1, round(IN_N_PROPORTION_DATASETS * length(datasets)))
-asv_prevalence_count <- rowSums(asv_prevalence_by_dataset >= MIN_PREVALENCE_IN_SAMPLES_IN_DATASET)
-asv_to_keep_prevalence <- asv_prevalence_count >= prevalence_threshold_datasets
-
-cat("ASVs failing prevalence filter:", sum(!asv_to_keep_prevalence), "\n")
-
-asv_to_remove_abundance <- which(!asv_to_keep_abundance)
-asv_to_remove_prevalence <- which(!asv_to_keep_prevalence)
-cat("ASVs removed total (unique):", length(unique(c(asv_to_remove_abundance, asv_to_remove_prevalence))), "\n")
-
-asv_to_keep <- asv_to_keep_abundance & asv_to_keep_prevalence
-
-cat("ASVs after both filters:", sum(asv_to_keep), "\n")
+cat("\n--- ASV Filtering ---\n")
+cat("Total number of samples:", nsamples(ps0), "\n")
+cat("Minimum prevalence for ASVs:", MIN_PREVALENCE_OVER_ALL_SAMPLES, "\n")
+cat("Minimum number of samples an ASV must be present in:", min_samples, "\n")
+cat("Total ASVs before filtering:", ntaxa(ps0), "\n")
+cat("ASVs to keep based on prevalence:", sum(asv_to_keep), "\n")
+cat("ASVs to remove:", ntaxa(ps0) - sum(asv_to_keep), "\n\n")
 
 
 
 
 # Present Total Percentage Abundance of Core ASVs -----------------------------------------
+
+# Create a data.frame from sample_data
+sample_data_df <- as(sample_data(ps0), "data.frame")
+
+# Apply total sum scaling to the phyloseq object
+ps0_tss <- transform_sample_counts(ps0, function(x) x / sum(x))
+
+# Get the TSS-transformed counts
+tss_counts <- as(otu_table(ps0_tss), "matrix")
+
+# Get the dataset IDs
+datasets <- unique(sample_data_df[[DATASET_ID_COLUMN]])
 
 # Calculate mean percentage abundance of core ASVs for each dataset
 core_asv_abundance <- sapply(datasets, function(ds) {
