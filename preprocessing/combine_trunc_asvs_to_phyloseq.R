@@ -79,8 +79,8 @@ DATASET_DIRS <- c(
 #   v4_truncation_stool_active/*
 #   v4_truncation_stool_treated/*
 #   v4_truncation_duodenal_active/*
-SEQS_FNA_FILE_PATH <- "v4_truncation_stool_active/seqs.fna"   # <--- [!!!] Change per analysis
-ASV_ABUNDANCES_FILE_PATH <- "v4_truncation_stool_active/asv_abundances_transposed.tsv"   # <--- [!!!] Change per analysis
+SEQS_FNA_FILE_PATH <- "v4_truncation_duodenal_active/seqs.fna"   # <--- [!!!] Change per analysis
+ASV_ABUNDANCES_FILE_PATH <- "v4_truncation_duodenal_active/asv_abundances_transposed.tsv"   # <--- [!!!] Change per analysis
 
 
 # Paths to databases
@@ -89,8 +89,8 @@ SPECIES_ASSIGNMENT_SET <- "/mnt/secondary/16S_databases/silva_species_assignment
 
 
 # Output paths
-OUT_DIR <- "/home/haig/Repos/meta-analysis/preprocessing/phyloseq_objects"
-ANALYSIS_DIR_NAME <- "stool_active_phyloseq_objects"   # <--- [!!!] Change per analysis
+OUT_DIR <- "/home/haig/Repos/meta-analysis/preprocessing/phyloseq_objects2"
+ANALYSIS_DIR_NAME <- "duodenum_phyloseq_objects"   # <--- [!!!] Change per analysis
 # e.g:
 #   prospective_phyloseq_objects
 #   stool_active_phyloseq_objects
@@ -114,6 +114,7 @@ PS2_otu_tsv_output <- file.path(OUT_DIR, ANALYSIS_DIR_NAME, "ps2_asv_table.tsv")
 PS2_sample_tsv_output <- file.path(OUT_DIR, ANALYSIS_DIR_NAME, "ps2_sample_data.tsv")
 # Filtered sample table
 FILTERED_SAMPLES_TSV_OUTPUT <- file.path(OUT_DIR, ANALYSIS_DIR_NAME, "filtered_samples.tsv")
+CORE_ASV_DATASET_COUNTS_PATH <- file.path(OUT_DIR, ANALYSIS_DIR_NAME, "core_asv_dataset_counts.csv")
 
 # Record all console output to a log file
 sink(file.path(OUT_DIR, ANALYSIS_DIR_NAME, "combination_console_output.log"), split = TRUE)
@@ -143,8 +144,8 @@ FILTERING_INCLUSION_RULES = list(               # <--- [!!!] Change per analysis
 
 
   # Stool Active ---
-  "(Diagnosed_Celiac == TRUE & Gluten_Free_Diet == FALSE) | (Diagnosed_Celiac == FALSE & Gluten_Free_Diet == FALSE)",
-  "Sample_Site == 'stool'"
+  # "(Diagnosed_Celiac == TRUE & Gluten_Free_Diet == FALSE) | (Diagnosed_Celiac == FALSE & Gluten_Free_Diet == FALSE)",
+  # "Sample_Site == 'stool'"
 
 
   # Stool Treated ---
@@ -153,8 +154,8 @@ FILTERING_INCLUSION_RULES = list(               # <--- [!!!] Change per analysis
 
 
   # Duodenum Active ---
-  # "(Diagnosed_Celiac == TRUE & Gluten_Free_Diet == FALSE) | (Diagnosed_Celiac == FALSE & Gluten_Free_Diet == FALSE)",
-  # "Sample_Site == 'duodenal'"
+  "(Diagnosed_Celiac == TRUE & Gluten_Free_Diet == FALSE) | (Diagnosed_Celiac == FALSE & Gluten_Free_Diet == FALSE)",
+  "Sample_Site == 'duodenal'"
 
 )
 # Downsample Milletich dataset to 26 control samples
@@ -545,6 +546,95 @@ ps1 <- prune_taxa(asv_to_keep, ps0)
 
 # Check phyloseq object
 ps1
+
+
+
+
+
+
+
+# Count core ASVs per dataset and dataset pairs --------------------------------
+# This section computes and writes to a file the number of ASVs in each dataset
+# before and after filtering, as well as the number of ASVs shared between
+# dataset pairs before and after filtering.
+
+# Get OTU tables before and after filtering
+otu0 <- as.matrix(otu_table(ps0))
+otu1 <- as.matrix(otu_table(ps1))
+
+# Get ASV lists for each dataset before and after filtering
+asvs_before_filter <- list()
+asvs_after_filter <- list()
+
+for (ds in datasets) {
+    # Get samples for the current dataset
+    ds_samples <- rownames(sample_data_df[sample_data_df[[DATASET_ID_COLUMN]] == ds, ])
+
+    # Get ASVs present in these samples (before filtering)
+    if (length(ds_samples) > 0) {
+        ds_otu0 <- otu0[ds_samples, , drop = FALSE]
+        asvs_before_filter[[ds]] <- colnames(ds_otu0)[colSums(ds_otu0) > 0]
+    } else {
+        asvs_before_filter[[ds]] <- character(0)
+    }
+
+    # Get ASVs present in these samples (after filtering)
+    if (length(ds_samples) > 0) {
+        ds_otu1 <- otu1[ds_samples, , drop = FALSE]
+        asvs_after_filter[[ds]] <- colnames(ds_otu1)[colSums(ds_otu1) > 0]
+    } else {
+        asvs_after_filter[[ds]] <- character(0)
+    }
+}
+
+# Create a data frame to store the results
+results_df <- data.frame(set = character(),
+                         num_asvs_before_filter = integer(),
+                         num_asvs_after_filter = integer(),
+                         stringsAsFactors = FALSE)
+
+# Add counts for individual datasets
+for (ds in datasets) {
+    num_before <- length(asvs_before_filter[[ds]])
+    num_after <- length(asvs_after_filter[[ds]])
+    results_df <- rbind(results_df, data.frame(set = ds,
+                                               num_asvs_before_filter = num_before,
+                                               num_asvs_after_filter = num_after))
+}
+
+# Add counts for dataset pairs
+if (length(datasets) >= 2) {
+    dataset_pairs <- combn(datasets, 2, simplify = FALSE)
+    for (pair in dataset_pairs) {
+        ds1 <- pair[1]
+        ds2 <- pair[2]
+        set_name <- paste(ds1, ds2, sep = "&&")
+
+        # Intersection before filtering
+        intersection_before <- intersect(asvs_before_filter[[ds1]], asvs_before_filter[[ds2]])
+        num_before <- length(intersection_before)
+
+        # Intersection after filtering
+        intersection_after <- intersect(asvs_after_filter[[ds1]], asvs_after_filter[[ds2]])
+        num_after <- length(intersection_after)
+
+        results_df <- rbind(results_df, data.frame(set = set_name,
+                                                   num_asvs_before_filter = num_before,
+                                                   num_asvs_after_filter = num_after))
+    }
+}
+
+# Write results to file
+write.csv(results_df, CORE_ASV_DATASET_COUNTS_PATH, row.names = FALSE)
+
+cat("\n--- Core ASV Dataset Counts ---\n")
+cat("Saved ASV counts per dataset and dataset pairs to:", CORE_ASV_DATASET_COUNTS_PATH, "\n")
+print(results_df)
+cat("\n")
+
+
+
+
 
 
 
