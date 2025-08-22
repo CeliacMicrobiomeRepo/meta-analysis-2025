@@ -10,7 +10,6 @@
 # ps1_taxa.csv                    -    Taxonomy tables for the ps1 phyloseq object
 # ps2_taxa.csv                    -    Taxonomy tables for the ps2 phyloseq object
 # core_asv_sample_abundance.csv   -    Percentage abundance of core ASVs for each sample
-# core_asv_abundance_boxplot.png  -    Boxplot showing distribution of core ASV abundance across datasets
 # ps2_asv_table.tsv               -    ASV table from ps2
 # ps2_sample_data.tsv             -    Sample data from ps2
 # filtered_samples.tsv            -    Filtered sample table (samples used in the analysis)
@@ -79,8 +78,8 @@ DATASET_DIRS <- c(
 #   v4_truncation_stool_active/*
 #   v4_truncation_stool_treated/*
 #   v4_truncation_duodenal_active/*
-SEQS_FNA_FILE_PATH <- "v4_truncation_duodenal_active/seqs.fna"   # <--- [!!!] Change per analysis
-ASV_ABUNDANCES_FILE_PATH <- "v4_truncation_duodenal_active/asv_abundances_transposed.tsv"   # <--- [!!!] Change per analysis
+SEQS_FNA_FILE_PATH <- "v4_truncation_stool_prospective/seqs.fna"   # <--- [!!!] Change per analysis
+ASV_ABUNDANCES_FILE_PATH <- "v4_truncation_stool_prospective/asv_abundances_transposed.tsv"   # <--- [!!!] Change per analysis
 
 
 # Paths to databases
@@ -90,7 +89,7 @@ SPECIES_ASSIGNMENT_SET <- "/mnt/secondary/16S_databases/silva_species_assignment
 
 # Output paths
 OUT_DIR <- "/home/haig/Repos/meta-analysis/preprocessing/phyloseq_objects2"
-ANALYSIS_DIR_NAME <- "duodenum_phyloseq_objects"   # <--- [!!!] Change per analysis
+ANALYSIS_DIR_NAME <- "prospective_phyloseq_objects"   # <--- [!!!] Change per analysis
 # e.g:
 #   prospective_phyloseq_objects
 #   stool_active_phyloseq_objects
@@ -108,7 +107,6 @@ dir.create(dirname(PS0_output), recursive = TRUE)
 dir.create(dirname(PS0_taxa_output), recursive = TRUE)
 # How much of the samples are made up by these core ASVs?
 TOTAL_ABUNDANCE_DATA_PATH <- file.path(OUT_DIR, ANALYSIS_DIR_NAME, "core_asv_sample_abundance.csv")
-TOTAL_ABUNDANCE_PLOT_PATH <- file.path(OUT_DIR, ANALYSIS_DIR_NAME, "core_asv_abundance_boxplot.png")
 # TSV output paths
 PS2_otu_tsv_output <- file.path(OUT_DIR, ANALYSIS_DIR_NAME, "ps2_asv_table.tsv")
 PS2_sample_tsv_output <- file.path(OUT_DIR, ANALYSIS_DIR_NAME, "ps2_sample_data.tsv")
@@ -124,7 +122,7 @@ sink(file.path(OUT_DIR, ANALYSIS_DIR_NAME, "combination_console_output.log"), sp
 # Column containing dataset IDs
 DATASET_ID_COLUMN = "Dataset_ID"
 # Columns to use as labels
-LABEL_COLUMN = "Diagnosed_Celiac"   # <--- [!!!] Change per analysis ("Diagnosed_Celiac" or "Will_Develop_Celiac")
+LABEL_COLUMN = "Will_Develop_Celiac"   # <--- [!!!] Change per analysis ("Diagnosed_Celiac" or "Will_Develop_Celiac")
 # Exclude data
 EXCLUDE_ROWS_WITH_VALUES = list(
   # Exclude incomplete data
@@ -139,8 +137,8 @@ EXCLUDE_ROWS_WITH_VALUES = list(
 FILTERING_INCLUSION_RULES = list(               # <--- [!!!] Change per analysis
 
   # Stool Prospecitve ---
-  # "Will_Develop_Celiac %in% c(TRUE, FALSE)",
-  # "Sample_Site == 'stool'"
+  "Will_Develop_Celiac %in% c(TRUE, FALSE)",
+  "Sample_Site == 'stool'"
 
 
   # Stool Active ---
@@ -154,12 +152,12 @@ FILTERING_INCLUSION_RULES = list(               # <--- [!!!] Change per analysis
 
 
   # Duodenum Active ---
-  "(Diagnosed_Celiac == TRUE & Gluten_Free_Diet == FALSE) | (Diagnosed_Celiac == FALSE & Gluten_Free_Diet == FALSE)",
-  "Sample_Site == 'duodenal'"
+  # "(Diagnosed_Celiac == TRUE & Gluten_Free_Diet == FALSE) | (Diagnosed_Celiac == FALSE & Gluten_Free_Diet == FALSE)",
+  # "Sample_Site == 'duodenal'"
 
 )
 # Downsample Milletich dataset to 26 control samples
-DOWNSAMPLE_MILLETICH <- FALSE   # <--- [!!!] Change per analysis (use for prospective analysis)
+DOWNSAMPLE_MILLETICH <- TRUE   # <--- [!!!] Change per analysis (use for prospective analysis)
 # Exclude non-illumina datasets
 EXCLUDE_NON_ILLUMINA_DATA <- TRUE
 # Exclude specific datasets
@@ -473,6 +471,15 @@ cat("ASVs to remove:", ntaxa(ps0) - sum(asv_to_keep), "\n\n")
 
 
 
+# Get the OTU table with only the core ASVs
+otu_after_filtering <- otu[, asv_to_keep, drop = FALSE]
+
+# Calculate the number of ASVs remaining after filtering for each sample
+num_asvs_after_filtering <- rowSums(otu_after_filtering > 0)
+
+# Calculate the total read counts for the ASVs that remain after filtering for each sample
+num_read_counts_after_filtering <- rowSums(otu_after_filtering)
+
 
 # Present Total Percentage Abundance of Core ASVs -----------------------------------------
 
@@ -497,35 +504,16 @@ core_asv_df <- data.frame("Total Percentage Abundance of Core ASVs" = core_asv_a
 print(core_asv_df)
 
 # Calculate percentage abundance of core ASVs for each sample
+# The samples in sample_data_df, tss_counts, num_asvs_after_filtering, and num_read_counts_after_filtering are all in the same order
 core_asv_sample_abundance <- data.frame(
-    Dataset = rep(datasets, sapply(datasets, function(ds) {
-        sum(sample_data_df[[DATASET_ID_COLUMN]] == ds)
-    })),
+    Dataset = sample_data_df[[DATASET_ID_COLUMN]],
     Sample = rownames(sample_data_df),
-    Core_ASV_Abundance = unlist(lapply(datasets, function(ds) {
-        ds_samples <- rownames(sample_data_df[sample_data_df[[DATASET_ID_COLUMN]] == ds, , drop=FALSE])
-        rowSums(tss_counts[ds_samples, asv_to_keep, drop=FALSE]) * 100
-    }))
+    Core_ASV_Abundance = rowSums(tss_counts[, asv_to_keep, drop = FALSE]) * 100,
+    Num_ASVs_After_Filtering = num_asvs_after_filtering,
+    Num_Read_Counts_After_Filtering = num_read_counts_after_filtering
 )
 raw_data_df <- core_asv_sample_abundance
 write.csv(raw_data_df, TOTAL_ABUNDANCE_DATA_PATH, row.names = FALSE)
-
-
-# Create a box-and-whisker plot
-boxplot <- ggplot(raw_data_df, aes(x = Dataset, y = Core_ASV_Abundance)) +
-    geom_boxplot() +
-    labs(
-        title = "Distribution of Core ASV Abundance Across Datasets",
-        x = "Dataset",
-        y = "Percentage Abundance of Core ASVs"
-    ) +
-    theme_minimal() +
-    theme(axis.text.x = element_text(angle = 45, hjust = 1))
-ggsave(filename = TOTAL_ABUNDANCE_PLOT_PATH, plot = boxplot, width = 10, height = 6, bg = "white")
-print(boxplot)
-
-
-
 
 
 # Check samples have a bare minimum % total abundance of core ASVs -------------------------
