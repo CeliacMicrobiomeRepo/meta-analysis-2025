@@ -30,7 +30,7 @@ import numpy as np
 # Main options ------------------------------------------
 # The analysis group to use 
 # Options:     'duodenum_active'   'stool_prospective'   'stool_active'   'stool_treated'
-GROUP_NAME = "duodenum_active"   # <-- [!!!] Change this each time
+GROUP_NAME = "stool_prospective"   # <-- [!!!] Change this each time
 # Transform with  
 # Options:     'tss'   'log10'   'log10-sum'   'clr'
 TRANFORMATION = 'tss'  
@@ -56,7 +56,7 @@ SAMPLE_ID_COLUMN = "Sample_ID"
 DATASET_ID_COLUMN = "Dataset_ID"
 # Column to use as labels
 # e.g.   'Diagnosed_Celiac'   'Will_Develop_Celiac'
-LABEL_COLUMN = "Diagnosed_Celiac"   # <-- [!!!] Change this each time
+LABEL_COLUMN = "Will_Develop_Celiac"   # <-- [!!!] Change this each time
 
 # Outputs ------------------------------------------
 # Construct output directory name based on options
@@ -72,7 +72,7 @@ ABOUT_PATH = os.path.join(OUTPUT_DIR_PATH, "about_dataset.txt")
 
 # ASV filter ------------------------------
 # Minimum average abundance across a dataset (in X% of datasets) for a taxonomic unit to be included
-MIN_AVERAGE_ABUNDANCE_IN_DATASET = 0.001
+MIN_AVERAGE_ABUNDANCE_IN_DATASET = 0.0
 # Minimum proportion of all samples in a dataset (in X% of datasets) for a taxonomic unit to be included
 MIN_PREVALENCE_IN_SAMPLES_IN_DATASET = 0.1
 # ...X proportion of the datasets:

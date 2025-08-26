@@ -2,12 +2,17 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import os
-# e.g.
-#   prospective_phyloseq_objects
-#   stool_active_phyloseq_objects
-#   stool_treated_phyloseq_objects
-#   duodenum_phyloseq_objects
-PHYLOSEQ_OBJECT_DIR = "/home/haig/Repos/meta-analysis/preprocessing/phyloseq_objects2/duodenum_phyloseq_objects"
+import re
+
+
+ROOT_PHYLOSEQ_OBJECTS_DIR = "/home/haig/Repos/meta-analysis/preprocessing/phyloseq_objects"
+
+PHYLOSEQ_OBJECT_DIRS = [
+    ROOT_PHYLOSEQ_OBJECTS_DIR + "/stool_active_phyloseq_objects",
+    ROOT_PHYLOSEQ_OBJECTS_DIR + "/stool_treated_phyloseq_objects",
+    ROOT_PHYLOSEQ_OBJECTS_DIR + "/prospective_phyloseq_objects",
+    ROOT_PHYLOSEQ_OBJECTS_DIR + "/duodenum_phyloseq_objects",
+]
 
 def plot_abundance_distribution(abundance_df, output_dir):
     plt.figure(figsize=(10, 6))
@@ -221,39 +226,99 @@ def plot_prevalence_filtering_effect_all_datasets(sample_df, abundance_df, outpu
     print(f"Saved combined prevalence filtering plot to {output_path}")
 
 
-if __name__ == "__main__":
-    abundance_file = os.path.join(PHYLOSEQ_OBJECT_DIR, "core_asv_sample_abundance.csv")
-    counts_file = os.path.join(PHYLOSEQ_OBJECT_DIR, "core_asv_dataset_counts.csv")
-    sample_data_file = os.path.join(PHYLOSEQ_OBJECT_DIR, "ps2_sample_data.tsv")
-    asv_table_file = os.path.join(PHYLOSEQ_OBJECT_DIR, "ps2_asv_table.tsv")
+def generate_asv_counts_summary(phyloseq_dirs, output_dir):
+    asv_counts = {}
+    
+    dir_to_group_name = {
+        "stool_active_phyloseq_objects": "Stool Active",
+        "stool_treated_phyloseq_objects": "Stool Treated",
+        "prospective_phyloseq_objects": "Stool Prospective",
+        "duodenum_phyloseq_objects": "Duodenal Active"
+    }
+    
+    for dir_path in phyloseq_dirs:
+        log_file = os.path.join(dir_path, "combination_console_output.log")
+        if not os.path.exists(log_file):
+            print(f"Log file not found: {log_file}")
+            continue
 
-    plots_dir = os.path.join(PHYLOSEQ_OBJECT_DIR, "plots")
-    os.makedirs(plots_dir, exist_ok=True)
+        dir_name = os.path.basename(dir_path)
+        group_name = dir_to_group_name.get(dir_name)
+        if not group_name:
+            print(f"Skipping directory with no group name mapping: {dir_name}")
+            continue
 
-    if os.path.exists(abundance_file) and os.path.exists(counts_file):
-        abundance_df = pd.read_csv(abundance_file)
-        counts_df = pd.read_csv(counts_file)
+        before_count = None
+        after_count = None
 
-        plot_abundance_distribution(abundance_df, plots_dir)
-        plot_asv_counts(counts_df, plots_dir)
-        plot_shared_asv_heatmap(counts_df, plots_dir, 'num_asvs_before_filter', 'Before Filtering')
-        plot_shared_asv_heatmap(counts_df, plots_dir, 'num_asvs_after_filter', 'After Filtering')
-        plot_proportional_heatmap(counts_df, plots_dir, 'num_asvs_before_filter', 'Before Filtering')
-        plot_proportional_heatmap(counts_df, plots_dir, 'num_asvs_after_filter', 'After Filtering')
-        print("\nFinished generating original plots.")
-    else:
-        print("Skipping original plots as one or more input files were not found.")
-
-    if os.path.exists(sample_data_file) and os.path.exists(asv_table_file):
-        sample_df = pd.read_csv(sample_data_file, sep='\t')
-        abundance_df = pd.read_csv(asv_table_file, sep='\t')
+        with open(log_file, 'r') as f:
+            for line in f:
+                if "Total ASVs before filtering:" in line:
+                    match = re.search(r'(\d+)', line)
+                    if match:
+                        before_count = int(match.group(1))
+                elif "ASVs to keep based on prevalence:" in line:
+                    match = re.search(r'(\d+)', line)
+                    if match:
+                        after_count = int(match.group(1))
         
-        plot_prevalence_filtering_effect(sample_df, abundance_df, plots_dir)
-        plot_prevalence_filtering_effect_all_datasets(sample_df, abundance_df, plots_dir)
-        print("\nPrevalence filtering plots generated successfully.")
-    else:
-        print(f"Skipping prevalence filtering plots due to missing files:")
-        if not os.path.exists(sample_data_file):
-            print(f"  - Not found: {sample_data_file}")
-        if not os.path.exists(asv_table_file):
-            print(f"  - Not found: {asv_table_file}")
+        if before_count is not None and after_count is not None:
+            asv_counts[group_name] = {'before': before_count, 'after': after_count}
+        else:
+            print(f"Could not find ASV counts in {log_file}")
+
+    output_file_path = os.path.join(output_dir, "asv_counts.txt")
+    with open(output_file_path, 'w') as f:
+        f.write("Number of ASVs Per Group:\n\n")
+        
+        group_order = ["Stool Prospective", "Stool Active", "Stool Treated", "Duodenal Active"]
+        for group_name in group_order:
+            if group_name in asv_counts:
+                counts = asv_counts[group_name]
+                f.write(f"{group_name}:\n")
+                f.write(f" - # ASVs before filtering = {counts['before']}\n")
+                f.write(f" - # ASVs after filtering = {counts['after']}\n\n")
+
+    print(f"ASV counts summary saved to {output_file_path}")
+
+
+if __name__ == "__main__":
+    generate_asv_counts_summary(PHYLOSEQ_OBJECT_DIRS, ROOT_PHYLOSEQ_OBJECTS_DIR)
+
+    for PHYLOSEQ_OBJECT_DIR in PHYLOSEQ_OBJECT_DIRS:
+
+        abundance_file = os.path.join(PHYLOSEQ_OBJECT_DIR, "core_asv_sample_abundance.csv")
+        counts_file = os.path.join(PHYLOSEQ_OBJECT_DIR, "core_asv_dataset_counts.csv")
+        sample_data_file = os.path.join(PHYLOSEQ_OBJECT_DIR, "ps2_sample_data.tsv")
+        asv_table_file = os.path.join(PHYLOSEQ_OBJECT_DIR, "ps2_asv_table.tsv")
+
+        plots_dir = os.path.join(PHYLOSEQ_OBJECT_DIR, "plots")
+        os.makedirs(plots_dir, exist_ok=True)
+
+        if os.path.exists(abundance_file) and os.path.exists(counts_file):
+            abundance_df = pd.read_csv(abundance_file)
+            counts_df = pd.read_csv(counts_file)
+
+            plot_abundance_distribution(abundance_df, plots_dir)
+            plot_asv_counts(counts_df, plots_dir)
+            plot_shared_asv_heatmap(counts_df, plots_dir, 'num_asvs_before_filter', 'Before Filtering')
+            plot_shared_asv_heatmap(counts_df, plots_dir, 'num_asvs_after_filter', 'After Filtering')
+            plot_proportional_heatmap(counts_df, plots_dir, 'num_asvs_before_filter', 'Before Filtering')
+            plot_proportional_heatmap(counts_df, plots_dir, 'num_asvs_after_filter', 'After Filtering')
+            print("\nFinished generating original plots.")
+        else:
+            print("Skipping original plots as one or more input files were not found.")
+
+        if os.path.exists(sample_data_file) and os.path.exists(asv_table_file):
+            sample_df = pd.read_csv(sample_data_file, sep='\t')
+            abundance_df = pd.read_csv(asv_table_file, sep='\t')
+            
+            plot_prevalence_filtering_effect(sample_df, abundance_df, plots_dir)
+            plot_prevalence_filtering_effect_all_datasets(sample_df, abundance_df, plots_dir)
+            print("\nPrevalence filtering plots generated successfully.")
+        else:
+            print(f"Skipping prevalence filtering plots due to missing files:")
+            if not os.path.exists(sample_data_file):
+                print(f"  - Not found: {sample_data_file}")
+            if not os.path.exists(asv_table_file):
+                print(f"  - Not found: {asv_table_file}")

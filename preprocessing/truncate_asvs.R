@@ -53,7 +53,7 @@
 #  - R packages: dada2, phyloseq, DECIPHER, Biostrings, ggplot2
 #  - mothur 1.49.0
 #  - SILVA database (mothur): silva.nr_v138_1
-#  - SILVA databases (DADA2): silva_nr99_v138.1_train_set.fa.gz, silva_species_assignment_v138.1.fa.gz
+#  - GTDB databases (DADA2): sbdi-gtdb-sativa.r10rs226.1genome.assignTaxonomy_formatted.fna.gz, sbdi-gtdb-sativa.r10rs226.20genomes.addSpecies_formatted.fna.gz
 
 
 # SET UP ====================================
@@ -129,8 +129,10 @@ setwd(WORKING_DIR)
 dir.create(OUTPUT_SUBDIR_NAME, recursive = TRUE)
 
 # Paths to databases
-TAXONOMY_TRAIN_SET <- "/mnt/secondary/16S_databases/silva_nr99_v138.1_train_set.fa.gz"
-SPECIES_ASSIGNMENT_SET <- "/mnt/secondary/16S_databases/silva_species_assignment_v138.1.fa.gz"
+# TAXONOMY_TRAIN_SET <- "/mnt/secondary/16S_databases/silva_nr99_v138.1_train_set.fa.gz"    #  <--- SILVA 138.1 (not used in meta-analysis)
+# SPECIES_ASSIGNMENT_SET <- "/mnt/secondary/16S_databases/silva_species_assignment_v138.1.fa.gz"    #  <--- SILVA 138.1 (not used in meta-analysis)
+TAXONOMY_TRAIN_SET <- "/mnt/secondary/16S_databases/sbdi-gtdb-sativa.r10rs226.1genome.assignTaxonomy_formatted.fna.gz"    #  <--- GTDB r226 (https://figshare.scilifelab.se/articles/dataset/SBDI_Sativa_curated_16S_GTDB_database/14869077/9)
+SPECIES_ASSIGNMENT_SET <- "/mnt/secondary/16S_databases/sbdi-gtdb-sativa.r10rs226.20genomes.addSpecies_formatted.fna.gz"    #  <--- GTDB r226
 
 # Record all console output to a log file
 sink(file.path(OUTPUT_SUBDIR_NAME, "truncation_console_output.log"), split = TRUE)

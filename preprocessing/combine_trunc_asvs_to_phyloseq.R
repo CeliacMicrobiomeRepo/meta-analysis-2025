@@ -18,9 +18,8 @@
 # Requirements:
 #  - R 4.5.1
 #  - R packages: dada2, phyloseq, ggplot2, Biostrings
-#  - SILVA databases (DADA2): silva_nr99_v138.1_train_set.fa.gz, silva_species_assignment_v138.1.fa.gz
-
-
+#  - GTDB databases (DADA2): sbdi-gtdb-sativa.r10rs226.1genome.assignTaxonomy_formatted.fna.gz, sbdi-gtdb-sativa.r10rs226.20genomes.addSpecies_formatted.fna.gz
+#      ^--- output from format_gtdb_database.py
 
 # SET UP ====================================
 # Load necessary packages
@@ -78,18 +77,19 @@ DATASET_DIRS <- c(
 #   v4_truncation_stool_active/*
 #   v4_truncation_stool_treated/*
 #   v4_truncation_duodenal_active/*
-SEQS_FNA_FILE_PATH <- "v4_truncation_stool_prospective/seqs.fna"   # <--- [!!!] Change per analysis
-ASV_ABUNDANCES_FILE_PATH <- "v4_truncation_stool_prospective/asv_abundances_transposed.tsv"   # <--- [!!!] Change per analysis
+SEQS_FNA_FILE_PATH <- "v4_truncation_duodenal_active/seqs.fna"   # <--- [!!!] Change per analysis
+ASV_ABUNDANCES_FILE_PATH <- "v4_truncation_duodenal_active/asv_abundances_transposed.tsv"   # <--- [!!!] Change per analysis
 
 
 # Paths to databases
-TAXONOMY_TRAIN_SET <- "/mnt/secondary/16S_databases/silva_nr99_v138.1_train_set.fa.gz"
-SPECIES_ASSIGNMENT_SET <- "/mnt/secondary/16S_databases/silva_species_assignment_v138.1.fa.gz"
+TAXONOMY_TRAIN_SET <- "/mnt/secondary/16S_databases/sbdi-gtdb-sativa.r10rs226.1genome.assignTaxonomy_formatted.fna.gz"    #  <--- GTDB r226 (https://figshare.scilifelab.se/articles/dataset/SBDI_Sativa_curated_16S_GTDB_database/14869077/9)
+SPECIES_ASSIGNMENT_SET <- "/mnt/secondary/16S_databases/sbdi-gtdb-sativa.r10rs226.20genomes.addSpecies_formatted.fna.gz"    #  <--- GTDB r226
+
 
 
 # Output paths
-OUT_DIR <- "/home/haig/Repos/meta-analysis/preprocessing/phyloseq_objects2"
-ANALYSIS_DIR_NAME <- "prospective_phyloseq_objects"   # <--- [!!!] Change per analysis
+OUT_DIR <- "/home/haig/Repos/meta-analysis/preprocessing/phyloseq_objects"
+ANALYSIS_DIR_NAME <- "duodenum_phyloseq_objects"   # <--- [!!!] Change per analysis
 # e.g:
 #   prospective_phyloseq_objects
 #   stool_active_phyloseq_objects
@@ -122,7 +122,7 @@ sink(file.path(OUT_DIR, ANALYSIS_DIR_NAME, "combination_console_output.log"), sp
 # Column containing dataset IDs
 DATASET_ID_COLUMN = "Dataset_ID"
 # Columns to use as labels
-LABEL_COLUMN = "Will_Develop_Celiac"   # <--- [!!!] Change per analysis ("Diagnosed_Celiac" or "Will_Develop_Celiac")
+LABEL_COLUMN = "Diagnosed_Celiac"   # <--- [!!!] Change per analysis ("Diagnosed_Celiac" or "Will_Develop_Celiac")
 # Exclude data
 EXCLUDE_ROWS_WITH_VALUES = list(
   # Exclude incomplete data
@@ -137,8 +137,8 @@ EXCLUDE_ROWS_WITH_VALUES = list(
 FILTERING_INCLUSION_RULES = list(               # <--- [!!!] Change per analysis
 
   # Stool Prospecitve ---
-  "Will_Develop_Celiac %in% c(TRUE, FALSE)",
-  "Sample_Site == 'stool'"
+  # "Will_Develop_Celiac %in% c(TRUE, FALSE)",
+  # "Sample_Site == 'stool'"
 
 
   # Stool Active ---
@@ -152,12 +152,12 @@ FILTERING_INCLUSION_RULES = list(               # <--- [!!!] Change per analysis
 
 
   # Duodenum Active ---
-  # "(Diagnosed_Celiac == TRUE & Gluten_Free_Diet == FALSE) | (Diagnosed_Celiac == FALSE & Gluten_Free_Diet == FALSE)",
-  # "Sample_Site == 'duodenal'"
+  "(Diagnosed_Celiac == TRUE & Gluten_Free_Diet == FALSE) | (Diagnosed_Celiac == FALSE & Gluten_Free_Diet == FALSE)",
+  "Sample_Site == 'duodenal'"
 
 )
 # Downsample Milletich dataset to 26 control samples
-DOWNSAMPLE_MILLETICH <- TRUE   # <--- [!!!] Change per analysis (use for prospective analysis)
+DOWNSAMPLE_MILLETICH <- FALSE   # <--- [!!!] Change per analysis (use for prospective analysis)
 # Exclude non-illumina datasets
 EXCLUDE_NON_ILLUMINA_DATA <- TRUE
 # Exclude specific datasets
@@ -169,8 +169,8 @@ EXCLUDE_SAMPLES <- unique(read.delim(LOW_READ_SAMPLES_TSV, header = TRUE)[, 2])
 
 
 # ASV filtering options --------------
-# Each ASV must occur in at least this proportion of samples at a non-zero abundance across all samples
-MIN_PREVALENCE_OVER_ALL_SAMPLES <- 0.1
+# Each ASV must occur in at least this proportion of samples at a non-zero abundance in at least one dataset
+MIN_PREVALENCE_PER_DATASET <- 0.1
 
 # A final filter to Samples ------------------
 # Must have at least this proportion of their abundance made of the core ASVs
@@ -456,15 +456,37 @@ ps0
 
 # Determine which ASVs should be filtered out ----------------------------
 
-# An ASV must occur in at least 10% of samples (rounded down) at a non-zero abundance.
+# An ASV must occur in at least 10% of samples (rounded up) at a non-zero abundance in at least one dataset.
 otu <- as.matrix(otu_table(ps0))
-min_samples <- floor(MIN_PREVALENCE_OVER_ALL_SAMPLES * nsamples(ps0))
-asv_to_keep <- colSums(otu > 0) >= min_samples
+
+# Get sample data to group by dataset
+sample_data_df <- as(sample_data(ps0), "data.frame")
+datasets <- unique(sample_data_df[[DATASET_ID_COLUMN]])
+
+# Identify ASVs to keep for each dataset
+asvs_to_keep_list <- lapply(datasets, function(ds) {
+    ds_samples <- rownames(sample_data_df[sample_data_df[[DATASET_ID_COLUMN]] == ds, ])
+    
+    if (length(ds_samples) == 0) {
+        return(character(0))
+    }
+    
+    ds_otu <- otu[ds_samples, , drop = FALSE]
+    min_samples_for_ds <- ceiling(MIN_PREVALENCE_PER_DATASET * length(ds_samples))
+    
+    # Return names of ASVs that meet the prevalence threshold in this dataset
+    return(colnames(ds_otu)[colSums(ds_otu > 0) >= min_samples_for_ds])
+})
+
+# Combine and get unique ASVs to keep across all datasets
+unique_asvs_to_keep <- unique(unlist(asvs_to_keep_list))
+asv_to_keep <- colnames(otu) %in% unique_asvs_to_keep
+
 
 cat("\n--- ASV Filtering ---\n")
 cat("Total number of samples:", nsamples(ps0), "\n")
-cat("Minimum prevalence for ASVs:", MIN_PREVALENCE_OVER_ALL_SAMPLES, "\n")
-cat("Minimum number of samples an ASV must be present in:", min_samples, "\n")
+cat("Minimum prevalence for ASVs per dataset:", MIN_PREVALENCE_PER_DATASET, "\n")
+cat("An ASV must be present in at least", MIN_PREVALENCE_PER_DATASET * 100, "% of samples in at least one dataset to be kept.\n")
 cat("Total ASVs before filtering:", ntaxa(ps0), "\n")
 cat("ASVs to keep based on prevalence:", sum(asv_to_keep), "\n")
 cat("ASVs to remove:", ntaxa(ps0) - sum(asv_to_keep), "\n\n")
@@ -483,8 +505,6 @@ num_read_counts_after_filtering <- rowSums(otu_after_filtering)
 
 # Present Total Percentage Abundance of Core ASVs -----------------------------------------
 
-# Create a data.frame from sample_data
-sample_data_df <- as(sample_data(ps0), "data.frame")
 
 # Apply total sum scaling to the phyloseq object
 ps0_tss <- transform_sample_counts(ps0, function(x) x / sum(x))
@@ -492,8 +512,6 @@ ps0_tss <- transform_sample_counts(ps0, function(x) x / sum(x))
 # Get the TSS-transformed counts
 tss_counts <- as(otu_table(ps0_tss), "matrix")
 
-# Get the dataset IDs
-datasets <- unique(sample_data_df[[DATASET_ID_COLUMN]])
 
 # Calculate mean percentage abundance of core ASVs for each dataset
 core_asv_abundance <- sapply(datasets, function(ds) {

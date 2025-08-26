@@ -1,1 +1,1 @@
-0.7347	SVM	{'C': 1, 'gamma': 1, 'kernel': 'sigmoid'}
+0.7438	LR	{'C': 1, 'max_iter': 10000, 'penalty': 'l2', 'solver': 'saga'}

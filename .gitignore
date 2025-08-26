@@ -25,10 +25,20 @@ all_data
 datasets
 datasets_transformation_comparison
 *.pkl
+all_data0
+
 
 # Misc
+phyloseq_objects0
 phyloseq_objects2
 
 # Throw away scripts
 verify_trunc_subseqs.R
 
+
+
+
+old-25-08
+datasets_main0
+
+meta-analysis-filtering-pseudocode.md

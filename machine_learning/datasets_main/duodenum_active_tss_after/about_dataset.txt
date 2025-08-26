@@ -14,16 +14,16 @@ Transformation Options:
   - Filtering: after
 
 ASV Filter:
-  - Minimum average abundance across a dataset (in X% of datasets) for a taxonomic unit to be included: 0.001
+  - Minimum average abundance across a dataset (in X% of datasets) for a taxonomic unit to be included: 0.0
   - Minimum proportion of all samples in a dataset (in X% of datasets) for a taxonomic unit to be included: 0.1
   - ...X proportion of the datasets: 0.0
 
 Summary:
   - Initial number of samples: 118
   - Final number of samples: 118
-  - Initial number of ASVs: 5402
-  - Final number of ASVs: 221
-  - ASVs removed: 5181
+  - Initial number of ASVs: 5469
+  - Final number of ASVs: 457
+  - ASVs removed: 5012
 
 Sample Label Details:
 Overall label distribution:
