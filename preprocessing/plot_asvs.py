@@ -1,3 +1,15 @@
+"""
+This script visualises the ASVs for each analysis group after running the `combine_trunc_asvs_to_phyloseq.R` script.
+
+It plots:
+ - The distribution of ASV abundances across datasets
+ - The number of ASVs before and after filtering
+ - The number of shared ASVs between datasets
+ - The proportion of shared ASVs between datasets
+ - The effect of a global prevalence filter on the mean proportion of total abundance removed
+"""
+
+
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt

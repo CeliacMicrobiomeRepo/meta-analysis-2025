@@ -1,20 +1,18 @@
 
 """
-Formats the headers of gzipped GTDB database 16S gene FASTA files ready for DADA2/Phyloseq. 
-The script also raises alarms when the headers are not formatted correctly when PRINT_BAD_LABELS is True.
-
+Formats the headers of gzipped GTDB database 16S gene FASTA files ready for DADA2/Phyloseq. Without this minor formatting, the taxonomic assignment will fail.
 
 The input files originate from here: https://figshare.scilifelab.se/articles/dataset/SBDI_Sativa_curated_16S_GTDB_database/14869077/9
  - The taxonomy file is used for assignTaxonomy
+    - We use the '1 genome' file, as recommended by the publishers
  - The species file is used for addSpecies
-
+    - We use the '20 genomes' file, as recommended by the publishers
 
 Example of input TAXONOMY_TRAIN_SET_UNFORMATTED header:
 >Archaea;Archaea;Methanobacteriota;Methanobacteria;Methanobacteriales;Methanobacteriaceae;Methanobacterium_A;Methanobacterium_A sp002494495
 
 Example of input SPECIES_ASSIGNMENT_SET_UNFORMATTED header:
 >RS_GCF_000189915.1~NZ_AELQ01000009.1 Methanocatella smithii_A
-
 
 Formatting rules:
 - Taxonomy headers (assignTaxonomy):
@@ -23,7 +21,6 @@ Formatting rules:
   - Join with semicolons and append a trailing semicolon. Output must therefore contain exactly 6 semicolons and end with `;`.
 - Species headers (addSpecies):
   - Nothing to do here.
-
 """
 
 
@@ -31,9 +28,6 @@ Formatting rules:
 import gzip
 import os
 
-
-
-# Constants
 
 # Input files
 TAXONOMY_TRAIN_SET_UNFORMATTED = "/mnt/secondary/16S_databases/sbdi-gtdb-sativa.r10rs226.1genome.assignTaxonomy.fna.gz"    #  <--- GTDB r226 (https://figshare.scilifelab.se/articles/dataset/SBDI_Sativa_curated_16S_GTDB_database/14869077/9)

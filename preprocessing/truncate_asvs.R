@@ -128,7 +128,7 @@ setwd(WORKING_DIR)
 # Create the subdirectory
 dir.create(OUTPUT_SUBDIR_NAME, recursive = TRUE)
 
-# Paths to databases
+# Paths to databases (These taxonomic assignments are actually discarded and replaced in the combine_trunc_asvs_to_phyloseq.R script anyway)
 # TAXONOMY_TRAIN_SET <- "/mnt/secondary/16S_databases/silva_nr99_v138.1_train_set.fa.gz"    #  <--- SILVA 138.1 (not used in meta-analysis)
 # SPECIES_ASSIGNMENT_SET <- "/mnt/secondary/16S_databases/silva_species_assignment_v138.1.fa.gz"    #  <--- SILVA 138.1 (not used in meta-analysis)
 TAXONOMY_TRAIN_SET <- "/mnt/secondary/16S_databases/sbdi-gtdb-sativa.r10rs226.1genome.assignTaxonomy_formatted.fna.gz"    #  <--- GTDB r226 (https://figshare.scilifelab.se/articles/dataset/SBDI_Sativa_curated_16S_GTDB_database/14869077/9)
