@@ -79,20 +79,25 @@ print_sample_summary(df)
 
 
 # ------------------------------------------------------------------------------------------------
-# 1. The meta-analysis is focused on only stool and duodenal samples that is 16S sequencing that captured V4.
+# 1. The meta-analysis is focused on stool/duodenal samples that are 16S that captured V4 or shotgun sequencing.
 # Apply the 1st filtering criteria
 site_filter = df['Sample_Site'].isin(['stool', 'duodenal'])
-seq_filter = df['Sequencing_Type'] == '16S'
-amplicon_filter = df['Amplicon_Region'].str.contains('V4', na=False)
-excluded_by_amplicon_df = df[site_filter & seq_filter & ~amplicon_filter] # Save for section 1.5
-combined_filter = site_filter & seq_filter & amplicon_filter
+
+# Create filters for 16S V4 and Shotgun
+s16_v4_filter = (df['Sequencing_Type'] == '16S') & df['Amplicon_Region'].str.contains('V4', na=False)
+sg_filter = df['Sequencing_Type'] == 'SG'
+
+# For section 1.5, find 16S samples excluded for not being V4
+excluded_by_amplicon_df = df[site_filter & (df['Sequencing_Type'] == '16S') & ~df['Amplicon_Region'].str.contains('V4', na=False)]
+
+# Combine filters and apply to the DataFrame
+combined_filter = site_filter & (s16_v4_filter | sg_filter)
 matching_count = combined_filter.sum()
 df = df[combined_filter]
-print(f"\n---\n1. After filtering for samples that are stool or duodenal, and 16S sequencing that captured V4:")
+print(f"\n---\n1. After filtering for stool/duodenal samples that are 16S that captured V4 or Shotgun:")
 
 # Print summary
 print_sample_summary(df)
-
 
 
 
@@ -137,7 +142,12 @@ print_sample_summary(df)
 # 3. Remove samples with more targeted filters: 
 #  - Down-sampling of Milletich's HCs to 26
 #  - "Illumina" not in Seq_Tech (this excludes 16S_27_Fornasaro)
+#  - Duodenal samples from SG_80_Mouzan (low quality after host read removal)
 # Apply the 3rd filtering criteria
+
+# Remove duodenal samples from SG_80_Mouzan
+mouzan_duodenal_mask = (df['Dataset_ID'] == 'SG_80_Mouzan') & (df['Sample_Site'] == 'duodenal')
+df = df[~mouzan_duodenal_mask]
 
 # Filter Milletich's HCs
 # (Discard all but a random 26 of the healthy controls in the 16S_1211_Milletich dataset)
@@ -160,7 +170,7 @@ if len(milletich_hc_indices) > HC_KEEP_COUNT:
 illumina_mask = df['Seq_Tech'].str.contains('Illumina', na=False)
 df = df[illumina_mask]
 
-print(f"\n---\n3. After applying targeted filters (Milletich HC down-sampling + Non-Illumina exclusion):")
+print(f"\n---\n3. After applying targeted filters (Milletich HC down-sampling, Non-Illumina exclusion, Mouzan duodenal filter):")
 print_sample_summary(df)
 
 
@@ -187,7 +197,10 @@ print_sample_summary(df)
 
 def dataset_is_balanced(n_treated_celiac, n_active_celiac, n_healthy):
     """Checks if a dataset has an acceptable case-control balance."""
-    return n_healthy >= 7 and (n_treated_celiac >= 7 or n_active_celiac >= 7)
+
+    is_balanced_for_treated = n_healthy >= 7 and n_treated_celiac >= 7
+    is_balanced_for_active = n_healthy >= 7 and n_active_celiac >= 7
+    return is_balanced_for_treated, is_balanced_for_active
 
 # Determine which datasets have a balanced number of celiac and healthy control samples
 balanced_dataset_ids = []
@@ -204,9 +217,17 @@ for dataset_id, dataset_df in df.groupby('Dataset_ID'):
 
     # Healthy controls are the remaining samples in the dataset
     n_healthy = len(dataset_df) - n_celiac
-    # Keep dataset if it satisfies the balance criterion
-    if dataset_is_balanced(n_treated_celiac, n_active_celiac, n_healthy):
+    # Assess balance
+    is_balanced_for_treated, is_balanced_for_active = dataset_is_balanced(n_treated_celiac, n_active_celiac, n_healthy)
+    # Keep dataset if it satisfies the balance criterion in either group
+    if is_balanced_for_treated or is_balanced_for_active:
         balanced_dataset_ids.append(dataset_id)
+        # If it is not balanced for treated, remove treated samples (if any)
+        if not is_balanced_for_treated:
+            df = df[~((df['Dataset_ID'] == dataset_id) & (df['Diagnosed_Celiac'] == True) & (df['Gluten_Free_Diet'] == True))]
+        # If it is not balanced for active, remove active samples (if any)
+        if not is_balanced_for_active:
+            df = df[~((df['Dataset_ID'] == dataset_id) & (df['Diagnosed_Celiac'] == True) & (df['Gluten_Free_Diet'] == False))]
 
 # Filter the main DataFrame to include only balanced datasets
 df = df[df['Dataset_ID'].isin(balanced_dataset_ids)]
@@ -223,73 +244,89 @@ print_sample_summary(df)
 #  - Stool Active CeD
 #  - Stool Treated CeD
 #  - Duodenal Active CeD
-print(f"\n---\n5. After splitting into groups for analysis:")
-print(f"Groups for Analysis:")
 
-def get_analysis_group_stats(dataframe, case_mask, control_mask):
+def run_and_print_analysis_groups(dataframe, title):
     """
-    Filters a DataFrame to find datasets containing both cases and controls,
-    and returns summary statistics and the filtered DataFrame for that group.
+    Takes a dataframe and a title, and prints the analysis group breakdowns.
     """
-    # Find datasets that have both cases and controls
-    datasets_with_cases = set(dataframe.loc[case_mask, 'Dataset_ID'].unique())
-    datasets_with_controls = set(dataframe.loc[control_mask, 'Dataset_ID'].unique())
-    datasets_with_both = list(datasets_with_cases.intersection(datasets_with_controls))
-    # Filter for samples belonging to these datasets AND being either a case or a control
-    group_df = dataframe[
-        dataframe['Dataset_ID'].isin(datasets_with_both) &
-        (case_mask | control_mask)
-    ]
-    # Calculate stats from the final filtered group
-    n_cases = case_mask.loc[group_df.index].sum()
-    n_controls = control_mask.loc[group_df.index].sum()
-    n_total = n_cases + n_controls
-    n_datasets = len(datasets_with_both)
-    return n_total, n_controls, n_cases, n_datasets, group_df
+    print(f"\n---\n{title}")
+    print(f"Groups for Analysis:")
+
+    def get_analysis_group_stats(df, case_mask, control_mask):
+        """
+        Filters a DataFrame to find datasets containing both cases and controls,
+        and returns summary statistics and the filtered DataFrame for that group.
+        """
+        # Find datasets that have both cases and controls
+        datasets_with_cases = set(df.loc[case_mask, 'Dataset_ID'].unique())
+        datasets_with_controls = set(df.loc[control_mask, 'Dataset_ID'].unique())
+        datasets_with_both = list(datasets_with_cases.intersection(datasets_with_controls))
+        # Filter for samples belonging to these datasets AND being either a case or a control
+        group_df = df[
+            df['Dataset_ID'].isin(datasets_with_both) &
+            (case_mask | control_mask)
+        ]
+        # Calculate stats from the final filtered group
+        n_cases = case_mask.loc[group_df.index].sum()
+        n_controls = control_mask.loc[group_df.index].sum()
+        n_total = n_cases + n_controls
+        n_datasets = len(datasets_with_both)
+        return n_total, n_controls, n_cases, n_datasets, group_df
+
+    def print_analysis_group_breakdown(analysis_df, case_mask, control_mask):
+        """Prints a per-dataset breakdown for an analysis group."""
+        # Group by dataset and iterate
+        for dataset_id, dataset_df in sorted(analysis_df.groupby('Dataset_ID')):
+            # The masks are for the larger dataframe, so we use the index
+            num_cases = case_mask.loc[dataset_df.index].sum()
+            num_controls = control_mask.loc[dataset_df.index].sum()
+            total_samples = num_cases + num_controls
+            dataset_id_print = dataset_id.replace('_(Stool)', '').replace('_(Duodenal)', '')
+            gap = ' ' * (30 - len(dataset_id_print))
+            print(f"     - {dataset_id_print}:{gap} {total_samples} samples [HC={num_controls}, CeD={num_cases}]")
+
+    # Identify each body site and control group
+    stool_df = dataframe[dataframe['Sample_Site'] == 'stool']
+    control_mask_stool_non_prospective = (stool_df['Diagnosed_Celiac'] == False) & (stool_df['Gluten_Free_Diet'] == False)
+    control_mask_stool_prospective = stool_df['Will_Develop_Celiac'] == False
+    duodenal_df = dataframe[dataframe['Sample_Site'] == 'duodenal']
+    control_mask_duodenal = (duodenal_df['Diagnosed_Celiac'] == False) & (duodenal_df['Gluten_Free_Diet'] == False)
+
+    # 1. Stool Prospective CeD
+    case_mask_prosp = stool_df['Will_Develop_Celiac'] == True
+    n_total, n_hc, n_ced, n_datasets, group_df = get_analysis_group_stats(stool_df, case_mask_prosp, control_mask_stool_prospective)
+    if n_total > 0:
+        print(f"   Stool Prospective CeD   (N={n_total}, HC={n_hc}, CeD={n_ced})   [Across {n_datasets} Datasets]")
+        print_analysis_group_breakdown(group_df, case_mask_prosp, control_mask_stool_prospective)
+
+    # 2. Stool Active CeD
+    case_mask_active = (stool_df['Diagnosed_Celiac'] == True) & (stool_df['Gluten_Free_Diet'] == False)
+    n_total, n_hc, n_ced, n_datasets, group_df = get_analysis_group_stats(stool_df, case_mask_active, control_mask_stool_non_prospective)
+    if n_total > 0:
+        print(f"   Stool Active CeD        (N={n_total}, HC={n_hc}, CeD={n_ced})   [Across {n_datasets} Datasets]")
+        print_analysis_group_breakdown(group_df, case_mask_active, control_mask_stool_non_prospective)
+
+    # 3. Stool Treated CeD
+    case_mask_treated = (stool_df['Diagnosed_Celiac'] == True) & (stool_df['Gluten_Free_Diet'] == True)
+    n_total, n_hc, n_ced, n_datasets, group_df = get_analysis_group_stats(stool_df, case_mask_treated, control_mask_stool_non_prospective)
+    if n_total > 0:
+        print(f"   Stool Treated CeD       (N={n_total}, HC={n_hc}, CeD={n_ced})   [Across {n_datasets} Datasets]")
+        print_analysis_group_breakdown(group_df, case_mask_treated, control_mask_stool_non_prospective)
+
+    # 4. Duodenal Active CeD
+    case_mask_duodenal_active = (duodenal_df['Diagnosed_Celiac'] == True) & (duodenal_df['Gluten_Free_Diet'] == False)
+    n_total, n_hc, n_ced, n_datasets, group_df = get_analysis_group_stats(duodenal_df, case_mask_duodenal_active, control_mask_duodenal)
+    if n_total > 0:
+        print(f"   Duodenal Active CeD     (N={n_total}, HC={n_hc}, CeD={n_ced})   [Across {n_datasets} Datasets]")
+        print_analysis_group_breakdown(group_df, case_mask_duodenal_active, control_mask_duodenal)
 
 
-def print_analysis_group_breakdown(analysis_df, case_mask, control_mask):
-    """Prints a per-dataset breakdown for an analysis group."""
-    # Group by dataset and iterate
-    for dataset_id, dataset_df in sorted(analysis_df.groupby('Dataset_ID')):
-        # The masks are for the larger dataframe, so we use the index
-        num_cases = case_mask.loc[dataset_df.index].sum()
-        num_controls = control_mask.loc[dataset_df.index].sum()
-        total_samples = num_cases + num_controls
-        dataset_id_print = dataset_id.replace('_(Stool)', '').replace('_(Duodenal)', '')
-        gap = ' ' * (30 - len(dataset_id_print))
-        print(f"     - {dataset_id_print}:{gap} {total_samples} samples [HC={num_controls}, CeD={num_cases}]")
-
-# Identify each body site and control group
-stool_df = df[df['Sample_Site'] == 'stool']
-control_mask_stool_non_prospective = (stool_df['Diagnosed_Celiac'] == False) & (stool_df['Gluten_Free_Diet'] == False)
-control_mask_stool_prospective = stool_df['Will_Develop_Celiac'] == False
-duodenal_df = df[df['Sample_Site'] == 'duodenal']
-control_mask_duodenal = (duodenal_df['Diagnosed_Celiac'] == False) & (duodenal_df['Gluten_Free_Diet'] == False)
-
-# 1. Stool Prospective CeD
-case_mask_prosp = stool_df['Will_Develop_Celiac'] == True
-n_total, n_hc, n_ced, n_datasets, group_df = get_analysis_group_stats(stool_df, case_mask_prosp, control_mask_stool_prospective)
-print(f"   Stool Prospective CeD   (N={n_total}, HC={n_hc}, CeD={n_ced})   [Across {n_datasets} Datasets]")
-print_analysis_group_breakdown(group_df, case_mask_prosp, control_mask_stool_prospective)
-
-# 2. Stool Active CeD
-case_mask_active = (stool_df['Diagnosed_Celiac'] == True) & (stool_df['Gluten_Free_Diet'] == False)
-n_total, n_hc, n_ced, n_datasets, group_df = get_analysis_group_stats(stool_df, case_mask_active, control_mask_stool_non_prospective)
-print(f"   Stool Active CeD        (N={n_total}, HC={n_hc}, CeD={n_ced})   [Across {n_datasets} Datasets]")
-print_analysis_group_breakdown(group_df, case_mask_active, control_mask_stool_non_prospective)
-
-# 3. Stool Treated CeD
-case_mask_treated = (stool_df['Diagnosed_Celiac'] == True) & (stool_df['Gluten_Free_Diet'] == True)
-n_total, n_hc, n_ced, n_datasets, group_df = get_analysis_group_stats(stool_df, case_mask_treated, control_mask_stool_non_prospective)
-print(f"   Stool Treated CeD       (N={n_total}, HC={n_hc}, CeD={n_ced})   [Across {n_datasets} Datasets]")
-print_analysis_group_breakdown(group_df, case_mask_treated, control_mask_stool_non_prospective)
-
-# 4. Duodenal Active CeD
-case_mask_duodenal_active = (duodenal_df['Diagnosed_Celiac'] == True) & (duodenal_df['Gluten_Free_Diet'] == False)
-n_total, n_hc, n_ced, n_datasets, group_df = get_analysis_group_stats(duodenal_df, case_mask_duodenal_active, control_mask_duodenal)
-print(f"   Duodenal Active CeD     (N={n_total}, HC={n_hc}, CeD={n_ced})   [Across {n_datasets} Datasets]")
-print_analysis_group_breakdown(group_df, case_mask_duodenal_active, control_mask_duodenal)
+# Run the analysis for SG, 16S, and combined datasets
+sg_df = df[df['Sequencing_Type'] == 'SG']
+s16_df = df[df['Sequencing_Type'] == '16S']
+run_and_print_analysis_groups(sg_df, "5a. Analysis Groups (Shotgun Datasets)")
+run_and_print_analysis_groups(s16_df, "5b. Analysis Groups (16S Datasets)")
+run_and_print_analysis_groups(df, "5c. Analysis Groups (Shotgun + 16S Datasets)")
 
 
 # ------------------------------------------------------------------------------------------------
